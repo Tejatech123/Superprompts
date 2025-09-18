@@ -56,7 +56,11 @@ const sampleImages = [
   },
 ]
 
-export function ImageGallery() {
+interface ImageGalleryProps {
+  onImageClick?: (imageUrl: string) => void;
+}
+
+export function ImageGallery({ onImageClick }: ImageGalleryProps) {
   const [copiedId, setCopiedId] = useState<number | null>(null)
 
   const copyPrompt = async (prompt: string, id: number) => {
@@ -131,7 +135,8 @@ export function ImageGallery() {
                         fetchPriority={index === 0 ? "high" : undefined}
                         loading={index === 0 ? "eager" : "lazy"}
                         decoding="async"
-                        className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-105 transform-gpu [image-rendering:auto]"
+                        className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-105 transform-gpu [image-rendering:auto] cursor-pointer"
+                        onClick={() => onImageClick?.(image.src || "/placeholder.svg")}
                       />
                     </a>
                   ) : (
@@ -141,7 +146,8 @@ export function ImageGallery() {
                       fetchPriority={index === 0 ? "high" : undefined}
                       loading={index === 0 ? "eager" : "lazy"}
                       decoding="async"
-                      className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-105 transform-gpu [image-rendering:auto]"
+                      className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-105 transform-gpu [image-rendering:auto] cursor-pointer"
+                      onClick={() => onImageClick?.(image.src || "/placeholder.svg")}
                     />
                   )}
                 </div>

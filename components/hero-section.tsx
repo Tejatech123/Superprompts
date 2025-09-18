@@ -1,4 +1,29 @@
-export function HeroSection() {
+"use client"
+
+import { useState, useEffect } from "react"
+
+interface HeroSectionProps {
+  onImageClick?: (imageUrl: string) => void;
+}
+
+export function HeroSection({ onImageClick }: HeroSectionProps) {
+  const images = [
+    "https://i.imghippo.com/files/M3163Z.webp",
+    "https://i.imghippo.com/files/UAj3025Ws.png", 
+    "https://i.imghippo.com/files/Ar6382qTs.png",
+    "https://i.imghippo.com/files/Kbfy8638ycg.png",
+    "https://i.imghippo.com/files/Zf9899ac.jpeg"
+  ]
+  
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length)
+    }, 3000) // Change image every 3 seconds
+
+    return () => clearInterval(interval)
+  }, [images.length])
   return (
     <section className="relative overflow-hidden min-h-screen">
       {/* Background gradient */}
@@ -15,14 +40,16 @@ export function HeroSection() {
       />
 
       <div className="relative z-10 flex min-h-screen w-full items-center justify-center px-4">
-        <div className="mx-auto max-w-6xl text-center space-y-6 sm:space-y-8">
-          <h1 className="text-balance text-4xl font-extrabold tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-            <span className="block text-lg sm:text-xl font-medium text-muted-foreground">Copy. Paste. Transform.</span>
-            <span className="block">
-              <span className="text-foreground">Powerful AI Image </span>
-              <span className="text-accent">Prompts</span>
-            </span>
-          </h1>
+        <div className="mx-auto max-w-6xl text-center space-y-8 sm:space-y-12">
+          <div className="pt-16 sm:pt-20">
+            <h1 className="text-balance text-4xl font-extrabold tracking-tight text-foreground sm:text-6xl lg:text-7xl">
+              <span className="block text-lg sm:text-xl font-medium text-muted-foreground">Copy. Paste. Transform.</span>
+              <span className="block">
+                <span className="text-foreground">Powerful AI Image </span>
+                <span className="text-accent">Prompts</span>
+              </span>
+            </h1>
+          </div>
 
           <div className="flex items-center justify-center gap-x-6">
             <div className="relative">
@@ -33,24 +60,53 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Grid of 5 image boxes with staggered layout */}
-          <div className="mx-auto mt-16 max-w-5xl">
-            <div className="grid grid-cols-5 gap-3 md:gap-4">
-              <div className="aspect-[3/4] rounded-xl overflow-hidden border border-white/20 shadow-lg hover:shadow-xl transition-shadow">
-                <img src="https://i.imghippo.com/files/M3163Z.webp" alt="Gallery 1" className="w-full h-full object-cover" />
+          {/* Slideshow */}
+          <div className="mx-auto mt-16 max-w-lg">
+            <div className="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/20 shadow-2xl">
+              <img 
+                src={images[currentImageIndex]} 
+                alt={`Gallery ${currentImageIndex + 1}`} 
+                loading="eager" 
+                className="w-full h-full object-cover cursor-pointer transition-opacity duration-500" 
+                onClick={() => onImageClick?.(images[currentImageIndex])}
+              />
+              
+              {/* Slide indicators */}
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                {images.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImageIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      index === currentImageIndex 
+                        ? 'bg-white scale-125' 
+                        : 'bg-white/50 hover:bg-white/75'
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
               </div>
-              <div className="aspect-[3/4] rounded-xl overflow-hidden border border-white/20 shadow-lg hover:shadow-xl transition-shadow -mt-4">
-                <img src="https://i.imghippo.com/files/UAj3025Ws.png" alt="Gallery 2" className="w-full h-full object-cover" />
-              </div>
-              <div className="aspect-[3/4] rounded-xl overflow-hidden border border-white/20 shadow-lg hover:shadow-xl transition-shadow -mt-8">
-                <img src="https://i.imghippo.com/files/Ar6382qTs.png" alt="Gallery 3" className="w-full h-full object-cover" />
-              </div>
-              <div className="aspect-[3/4] rounded-xl overflow-hidden border border-white/20 shadow-lg hover:shadow-xl transition-shadow -mt-4">
-                <img src="https://i.imghippo.com/files/Kbfy8638ycg.png" alt="Gallery 4" className="w-full h-full object-cover" />
-              </div>
-              <div className="aspect-[3/4] rounded-xl overflow-hidden border border-white/20 shadow-lg hover:shadow-xl transition-shadow">
-                <img src="https://i.imghippo.com/files/Zf9899ac.jpeg" alt="Gallery 5" className="w-full h-full object-cover" />
-              </div>
+              
+              {/* Navigation arrows */}
+              <button
+                onClick={() => setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white p-2 rounded-full transition-all duration-300"
+                aria-label="Previous image"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              
+              <button
+                onClick={() => setCurrentImageIndex((prev) => (prev + 1) % images.length)}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white p-2 rounded-full transition-all duration-300"
+                aria-label="Next image"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>

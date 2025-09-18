@@ -19,12 +19,28 @@ export function HomeHeader() {
   }
 
   const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut()
-    if (error) {
-      toast({ title: "Error", description: error.message, variant: "destructive" })
-    } else {
+    try {
+      // Try with local scope first
+      const { error } = await supabase.auth.signOut({ scope: 'local' })
+      if (error) {
+        console.error('Sign out error with local scope:', error)
+        // Fallback to default signOut without scope
+        const { error: fallbackError } = await supabase.auth.signOut()
+        if (fallbackError) {
+          console.error('Fallback sign out error:', fallbackError)
+          toast({ title: "Error", description: fallbackError.message, variant: "destructive" })
+          return
+        }
+      }
+      
+      // Clear any local storage
+      localStorage.removeItem('supabase.auth.token')
+      
       toast({ title: "Signed out", description: "You have been signed out successfully." })
       router.push("/")
+    } catch (err) {
+      console.error('Sign out error:', err)
+      toast({ title: "Error", description: "Failed to sign out. Please try again.", variant: "destructive" })
     }
   }
 
