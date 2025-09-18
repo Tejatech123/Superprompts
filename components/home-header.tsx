@@ -4,7 +4,6 @@ import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import Image from "next/image"
 import { supabase } from "@/lib/supabaseClient"
 import { useToast } from "@/hooks/use-toast"
 
@@ -34,9 +33,8 @@ export function HomeHeader() {
       <div className="container flex h-16 max-w-screen-xl items-center justify-between px-4">
         {/* Left: Brand */}
         <div className="flex items-center">
-          <Link href="/home" className="flex items-center gap-2 text-foreground transition-colors hover:text-accent">
-            <Image src="/icon (11).png" alt="Superprompts logo" width={24} height={24} className="h-6 w-6" />
-            <span className="text-2xl font-bold tracking-tight">Superprompts</span>
+          <Link href="/home" className="text-2xl font-bold tracking-tight text-foreground transition-colors hover:text-accent">
+            SuperPrompts
           </Link>
         </div>
 

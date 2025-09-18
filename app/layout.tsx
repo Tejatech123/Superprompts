@@ -8,12 +8,10 @@ import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
   title: 'Superprompts',
-  description: 'Superprompts – Prompt gallery and helper',
+  description: 'Superprompts',
   generator: 'Superprompts',
   icons: {
     icon: '/icon (11).png',
-    shortcut: '/icon (11).png',
-    apple: '/icon (11).png',
   },
 }
 
