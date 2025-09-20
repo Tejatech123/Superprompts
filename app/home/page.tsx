@@ -586,11 +586,11 @@ export default function HomePage() {
               {/* Image 1 - Stylish Man Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <img
-                  src="https://i.imghippo.com/files/rrRB5621GI.jpg"
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwKFQ67ApCEz9Sj47VuOge2ClmtwhGY5F1ALcP"
                   alt="Men gallery image 1"
                   loading="lazy"
                   className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/rrRB5621GI.jpg")}
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwKFQ67ApCEz9Sj47VuOge2ClmtwhGY5F1ALcP")}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
@@ -623,11 +623,11 @@ export default function HomePage() {
               {/* Image 2 - Cinematic Low-light Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <img
-                  src="https://i.imghippo.com/files/rbVn9579lQ.jpg"
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwvVnSihqr4RWh2BzsnfQYAoV8uCFUqGg1k5lv"
                   alt="Men gallery image 2"
                   loading="lazy"
                   className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/rbVn9579lQ.jpg")}
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwvVnSihqr4RWh2BzsnfQYAoV8uCFUqGg1k5lv")}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
@@ -660,11 +660,11 @@ export default function HomePage() {
               {/* Image 3 - 90s Vintage Editorial */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <img
-                  src="https://i.imghippo.com/files/rPs5531esg.jpg"
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwpXSpWieNu726RMeTXDadHG1zIB3tvw84Ynxh"
                   alt="Men gallery image 3"
                   loading="lazy"
                   className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/rPs5531esg.jpg")}
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwpXSpWieNu726RMeTXDadHG1zIB3tvw84Ynxh")}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
@@ -697,11 +697,11 @@ export default function HomePage() {
               {/* Image 4 - Rainy Street Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <img
-                  src="https://i.imghippo.com/files/oCmE5686xxM.jpg"
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwF3kNHbdIoRsHkT3nZS6YcalbweLB5izVrGJA"
                   alt="Men gallery image 4"
                   loading="lazy"
                   className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/oCmE5686xxM.jpg")}
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwF3kNHbdIoRsHkT3nZS6YcalbweLB5izVrGJA")}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
@@ -734,11 +734,11 @@ export default function HomePage() {
               {/* Image 5 - Mysterious Pigeon Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <img
-                  src="https://i.imghippo.com/files/eZU7237no.jpg"
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwXovxEO7Bt3KSY7wnDLHrzE2elpbQuU4OX9ax"
                   alt="Men gallery image 5"
                   loading="lazy"
                   className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/eZU7237no.jpg")}
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwXovxEO7Bt3KSY7wnDLHrzE2elpbQuU4OX9ax")}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
@@ -771,11 +771,11 @@ export default function HomePage() {
               {/* Image 6 - Black and White Aesthetic Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <img
-                  src="https://i.imghippo.com/files/aBZ2312LQ.jpg"
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw6d6hpXR53SnutNYHFlcKhsWkDoeapCyiRLgf"
                   alt="Men gallery image 6"
                   loading="lazy"
                   className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/aBZ2312LQ.jpg")}
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw6d6hpXR53SnutNYHFlcKhsWkDoeapCyiRLgf")}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
@@ -808,11 +808,11 @@ export default function HomePage() {
               {/* Image 7 - Retro Futuristic Café Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <img
-                  src="https://i.imghippo.com/files/aSI8333IyM.jpg"
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOweDNmcixc9HQ3GZfqXJBtES2vMxYF5pV0bsCO"
                   alt="Men gallery image 7"
                   loading="lazy"
                   className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/aSI8333IyM.jpg")}
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOweDNmcixc9HQ3GZfqXJBtES2vMxYF5pV0bsCO")}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
@@ -845,11 +845,11 @@ export default function HomePage() {
               {/* Image 8 - 90s Movie Hair Baddie */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <img
-                  src="https://i.imghippo.com/files/PPV6122VvM.jpg"
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw1mYjRUIKKMiwgGY1SZHo49FzdOE8cbm0rJCs"
                   alt="Men gallery image 8"
                   loading="lazy"
                   className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/PPV6122VvM.jpg")}
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw1mYjRUIKKMiwgGY1SZHo49FzdOE8cbm0rJCs")}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
@@ -882,11 +882,11 @@ export default function HomePage() {
               {/* Image 9 - Burning Newspaper Editorial */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <img
-                  src="https://i.imghippo.com/files/LJp5322R.jpg"
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw2YGGidPdNwuUS4GmpFVAx9MIeP0Cc38hkJ1T"
                   alt="Men gallery image 9"
                   loading="lazy"
                   className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/LJp5322R.jpg")}
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw2YGGidPdNwuUS4GmpFVAx9MIeP0Cc38hkJ1T")}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
@@ -919,11 +919,11 @@ export default function HomePage() {
               {/* Image 10 - Moody Studio Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <img
-                  src="https://i.imghippo.com/files/ULdC7097w.jpg"
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwuvNAbMyOx8QSKjRDgENotv2CseWp9U4PY7Hf"
                   alt="Men gallery image 10"
                   loading="lazy"
                   className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/ULdC7097w.jpg")}
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwuvNAbMyOx8QSKjRDgENotv2CseWp9U4PY7Hf")}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
@@ -956,11 +956,11 @@ export default function HomePage() {
               {/* Image 11 - Red Wine Vintage Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <img
-                  src="https://i.imghippo.com/files/RjzW8198SU.jpg"
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwpV2VlaeNu726RMeTXDadHG1zIB3tvw84Ynxh"
                   alt="Men gallery image 11"
                   loading="lazy"
                   className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/RjzW8198SU.jpg")}
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwpV2VlaeNu726RMeTXDadHG1zIB3tvw84Ynxh")}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
@@ -993,11 +993,11 @@ export default function HomePage() {
               {/* Image 12 - Luxury Yacht Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <img
-                  src="https://i.imghippo.com/files/XNYX6799oKE.jpg"
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwsX0t1VrA9yP62t1XhHlQpzUKS8a4MNTRjOom"
                   alt="Men gallery image 12"
                   loading="lazy"
                   className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/XNYX6799oKE.jpg")}
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwsX0t1VrA9yP62t1XhHlQpzUKS8a4MNTRjOom")}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
@@ -1030,11 +1030,11 @@ export default function HomePage() {
               {/* Image 13 - Beige Wall Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <img
-                  src="https://i.imghippo.com/files/XOxr2610Uw.jpg"
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwh9rSfonL1yHDPmZnwgCOA8EKibXWT0MBsc9U"
                   alt="Men gallery image 13"
                   loading="lazy"
                   className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/XOxr2610Uw.jpg")}
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwh9rSfonL1yHDPmZnwgCOA8EKibXWT0MBsc9U")}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">

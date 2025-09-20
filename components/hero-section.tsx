@@ -8,7 +8,7 @@ interface HeroSectionProps {
 
 export function HeroSection({ onImageClick }: HeroSectionProps) {
   const images = [
-    "https://i.imghippo.com/files/M3163Z.webp",
+    "https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwKFQ67ApCEz9Sj47VuOge2ClmtwhGY5F1ALcP",
     "https://i.imghippo.com/files/UAj3025Ws.png", 
     "https://i.imghippo.com/files/Ar6382qTs.png",
     "https://i.imghippo.com/files/Kbfy8638ycg.png",
