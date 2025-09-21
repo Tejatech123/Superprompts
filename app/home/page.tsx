@@ -2,16 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabaseClient";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { HomeHeader } from "@/components/home-header";
+import { AuthHeader } from "@/components/auth-header";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function HomePage() {
   const router = useRouter();
   const { toast } = useToast();
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const { user, loading } = useAuth();
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -52,30 +51,10 @@ export default function HomePage() {
   }
 
   useEffect(() => {
-    // Get initial session
-    const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session?.user) {
-        setUser(session.user);
-      } else {
-        router.push("/sign-in");
-      }
-      setLoading(false);
-    };
-
-    getSession();
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        setUser(session.user);
-      } else {
-        router.push("/sign-in");
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [router]);
+    if (!loading && !user) {
+      router.push("/sign-in");
+    }
+  }, [user, loading, router]);
 
 
   if (loading) {
@@ -89,9 +68,13 @@ export default function HomePage() {
     );
   }
 
+  if (!user) {
+    return null; // Will redirect to sign-in
+  }
+
   return (
     <div className="min-h-screen bg-background">
-      <HomeHeader />
+      <AuthHeader />
       
       {/* Image Preview Modal */}
       {previewImage && (
@@ -108,12 +91,14 @@ export default function HomePage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            <img
-              src={previewImage}
-              alt="Preview"
-              className="w-full h-full object-contain rounded-lg"
-              onClick={(e) => e.stopPropagation()}
-            />
+            <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+              <img
+                src={previewImage}
+                alt="Preview"
+                className="w-full h-full object-contain rounded-lg"
+                onClick={(e) => e.stopPropagation()}
+              />
+            </div>
           </div>
         </div>
       )}
@@ -135,6 +120,8 @@ export default function HomePage() {
                 "All",
                 "Women",
                 "Men",
+                "Baby Girl",
+                "Baby Boy",
                 "Navratri Special",
                 "Family",
                 "Couple",
@@ -170,13 +157,15 @@ export default function HomePage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Image 1 - landing style */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
-                  src="https://i.imghippo.com/files/GtlF8325Bzs.jpg"
-                  alt="Women gallery image 1"
-                  loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/GtlF8325Bzs.jpg")}
-                />
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwWVWoHbGn0A6bF5yLp2EtrRBMslG4CHkwIXmd"
+                    alt="Women gallery image 1"
+                    loading="lazy"
+                    className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                    onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwWVWoHbGn0A6bF5yLp2EtrRBMslG4CHkwIXmd")}
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Underwater Serenity</h3>
@@ -207,13 +196,15 @@ export default function HomePage() {
 
               {/* Image 2 - landing style */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
-                  src="https://i.imghippo.com/files/hxYf1576ftM.jpg"
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwPSz9PLUBMVZJ47vNpc91sLzxKCkmFDnGX6q3"
                   alt="Women gallery image 2"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/hxYf1576ftM.jpg")}
-                />
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwPSz9PLUBMVZJ47vNpc91sLzxKCkmFDnGX6q3")}
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Monsoon Balcony Joy</h3>
@@ -244,13 +235,15 @@ export default function HomePage() {
 
               {/* Image 3 - landing style */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
-                  src="https://i.imghippo.com/files/KCM6165xNs.jpg"
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwik4M2DTxnVosi45XmY9zrfg0QSaehtvdlOHM"
                   alt="Women gallery image 3"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/KCM6165xNs.jpg")}
-                />
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwik4M2DTxnVosi45XmY9zrfg0QSaehtvdlOHM")}
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Lotus Meditation</h3>
@@ -281,13 +274,15 @@ export default function HomePage() {
 
               {/* Image 4 - landing style */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
-                  src="https://i.imghippo.com/files/MV7928wzM.png"
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwaUjfSMiRDNb3IhfgrKEmuyxs7vH80dATFPYa"
                   alt="Women gallery image 4"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/MV7928wzM.png")}
-                />
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwaUjfSMiRDNb3IhfgrKEmuyxs7vH80dATFPYa")}
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Festive Silk Portrait</h3>
@@ -318,13 +313,15 @@ export default function HomePage() {
 
               {/* Image 5 - landing style */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
-                  src="https://i.imghippo.com/files/uEAG7823Fls.jpg"
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwwZ2WhVkNi0m4VxOsT8326pgFSDWGbXqnh5Bf"
                   alt="Women gallery image 5"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/uEAG7823Fls.jpg")}
-                />
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwwZ2WhVkNi0m4VxOsT8326pgFSDWGbXqnh5Bf")}
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Maharashtrian Grace</h3>
@@ -355,13 +352,15 @@ export default function HomePage() {
 
               {/* Image 6 - landing style */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
-                  src="https://i.imghippo.com/files/OQc7675CTI.jpg"
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwXyDTC27Bt3KSY7wnDLHrzE2elpbQuU4OX9ax"
                   alt="Women gallery image 6"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/OQc7675CTI.jpg")}
-                />
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwXyDTC27Bt3KSY7wnDLHrzE2elpbQuU4OX9ax")}
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Rustic Rain Balcony</h3>
@@ -392,13 +391,15 @@ export default function HomePage() {
 
               {/* Image 7 - Black Lehenga Editorial */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
-                  src="https://i.imghippo.com/files/owq1129Mg.jpg"
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwK5TsQECEz9Sj47VuOge2ClmtwhGY5F1ALcPk"
                   alt="Women gallery image 7"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/owq1129Mg.jpg")}
-                />
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwK5TsQECEz9Sj47VuOge2ClmtwhGY5F1ALcPk")}
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Black Lehenga Editorial</h3>
@@ -429,13 +430,15 @@ export default function HomePage() {
 
               {/* Image 8 - Temple Saree Grace */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
-                  src="https://i.imghippo.com/files/aj7493xRQ.jpg"
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwL5BqSZObUuOwQ3JFylTsXkfHctSMIBCxvrDj"
                   alt="Women gallery image 8"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/aj7493xRQ.jpg")}
-                />
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwL5BqSZObUuOwQ3JFylTsXkfHctSMIBCxvrDj")}
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Temple Saree Grace</h3>
@@ -466,13 +469,15 @@ export default function HomePage() {
 
               {/* Image 9 - Rainy Street Walk */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
-                  src="https://i.imghippo.com/files/YIg6683WB.jpg"
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwQ2xoK9to4iDVqPSE2G8d0fgRysWrx9mC3vcY"
                   alt="Women gallery image 9"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/YIg6683WB.jpg")}
-                />
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwQ2xoK9to4iDVqPSE2G8d0fgRysWrx9mC3vcY")}
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Rainy Street Walk</h3>
@@ -503,13 +508,15 @@ export default function HomePage() {
 
               {/* Image 10 - Pastel Barbie Gown */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
-                  src="https://i.imghippo.com/files/MQv2320gzU.jpg"
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwGWpGTEBsXRletSyFPif3JqbwdE0nUhCmI89B"
                   alt="Women gallery image 10"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/MQv2320gzU.jpg")}
-                />
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwGWpGTEBsXRletSyFPif3JqbwdE0nUhCmI89B")}
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Pastel Barbie Gown</h3>
@@ -540,13 +547,15 @@ export default function HomePage() {
 
               {/* Image 11 - Floral Wall Bouquet */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
-                  src="https://i.imghippo.com/files/GvES3471jGk.jpg"
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwWQewbBUGn0A6bF5yLp2EtrRBMslG4CHkwIXm"
                   alt="Women gallery image 11"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                  onClick={() => setPreviewImage("https://i.imghippo.com/files/GvES3471jGk.jpg")}
-                />
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwWQewbBUGn0A6bF5yLp2EtrRBMslG4CHkwIXm")}
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Floral Wall Bouquet</h3>
@@ -580,18 +589,20 @@ export default function HomePage() {
 
           {/* Men Category - Gallery */}
           {(selectedCategory === "All" || selectedCategory === "Men") && (
-          <section className="space-y-6">
+          <section className="space-y-6 mt-16">
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Image 1 - Stylish Man Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwKFQ67ApCEz9Sj47VuOge2ClmtwhGY5F1ALcP"
                   alt="Men gallery image 1"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
                   onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwKFQ67ApCEz9Sj47VuOge2ClmtwhGY5F1ALcP")}
-                />
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Stylish Man Portrait</h3>
@@ -622,13 +633,15 @@ export default function HomePage() {
 
               {/* Image 2 - Cinematic Low-light Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwvVnSihqr4RWh2BzsnfQYAoV8uCFUqGg1k5lv"
                   alt="Men gallery image 2"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
                   onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwvVnSihqr4RWh2BzsnfQYAoV8uCFUqGg1k5lv")}
-                />
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Cinematic Low-light Portrait</h3>
@@ -659,13 +672,15 @@ export default function HomePage() {
 
               {/* Image 3 - 90s Vintage Editorial */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwpXSpWieNu726RMeTXDadHG1zIB3tvw84Ynxh"
                   alt="Men gallery image 3"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
                   onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwpXSpWieNu726RMeTXDadHG1zIB3tvw84Ynxh")}
-                />
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">90s Vintage Editorial</h3>
@@ -696,13 +711,15 @@ export default function HomePage() {
 
               {/* Image 4 - Rainy Street Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwF3kNHbdIoRsHkT3nZS6YcalbweLB5izVrGJA"
                   alt="Men gallery image 4"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
                   onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwF3kNHbdIoRsHkT3nZS6YcalbweLB5izVrGJA")}
-                />
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Rainy Street Portrait</h3>
@@ -733,13 +750,15 @@ export default function HomePage() {
 
               {/* Image 5 - Mysterious Pigeon Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwXovxEO7Bt3KSY7wnDLHrzE2elpbQuU4OX9ax"
                   alt="Men gallery image 5"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
                   onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwXovxEO7Bt3KSY7wnDLHrzE2elpbQuU4OX9ax")}
-                />
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Mysterious Pigeon Portrait</h3>
@@ -770,13 +789,15 @@ export default function HomePage() {
 
               {/* Image 6 - Black and White Aesthetic Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw6d6hpXR53SnutNYHFlcKhsWkDoeapCyiRLgf"
                   alt="Men gallery image 6"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
                   onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw6d6hpXR53SnutNYHFlcKhsWkDoeapCyiRLgf")}
-                />
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Black and White Aesthetic Portrait</h3>
@@ -807,13 +828,15 @@ export default function HomePage() {
 
               {/* Image 7 - Retro Futuristic Café Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOweDNmcixc9HQ3GZfqXJBtES2vMxYF5pV0bsCO"
                   alt="Men gallery image 7"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
                   onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOweDNmcixc9HQ3GZfqXJBtES2vMxYF5pV0bsCO")}
-                />
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Retro Futuristic Café Portrait</h3>
@@ -844,13 +867,15 @@ export default function HomePage() {
 
               {/* Image 8 - 90s Movie Hair Baddie */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw1mYjRUIKKMiwgGY1SZHo49FzdOE8cbm0rJCs"
                   alt="Men gallery image 8"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
                   onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw1mYjRUIKKMiwgGY1SZHo49FzdOE8cbm0rJCs")}
-                />
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">90s Movie Hair Baddie</h3>
@@ -881,13 +906,15 @@ export default function HomePage() {
 
               {/* Image 9 - Burning Newspaper Editorial */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw2YGGidPdNwuUS4GmpFVAx9MIeP0Cc38hkJ1T"
                   alt="Men gallery image 9"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
                   onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw2YGGidPdNwuUS4GmpFVAx9MIeP0Cc38hkJ1T")}
-                />
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Burning Newspaper Editorial</h3>
@@ -918,13 +945,15 @@ export default function HomePage() {
 
               {/* Image 10 - Moody Studio Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwuvNAbMyOx8QSKjRDgENotv2CseWp9U4PY7Hf"
                   alt="Men gallery image 10"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
                   onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwuvNAbMyOx8QSKjRDgENotv2CseWp9U4PY7Hf")}
-                />
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Moody Studio Portrait</h3>
@@ -955,13 +984,15 @@ export default function HomePage() {
 
               {/* Image 11 - Red Wine Vintage Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwpV2VlaeNu726RMeTXDadHG1zIB3tvw84Ynxh"
                   alt="Men gallery image 11"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
                   onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwpV2VlaeNu726RMeTXDadHG1zIB3tvw84Ynxh")}
-                />
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Red Wine Vintage Portrait</h3>
@@ -992,13 +1023,15 @@ export default function HomePage() {
 
               {/* Image 12 - Luxury Yacht Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwsX0t1VrA9yP62t1XhHlQpzUKS8a4MNTRjOom"
                   alt="Men gallery image 12"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
                   onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwsX0t1VrA9yP62t1XhHlQpzUKS8a4MNTRjOom")}
-                />
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Luxury Yacht Portrait</h3>
@@ -1029,13 +1062,15 @@ export default function HomePage() {
 
               {/* Image 13 - Beige Wall Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <img
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwh9rSfonL1yHDPmZnwgCOA8EKibXWT0MBsc9U"
                   alt="Men gallery image 13"
                   loading="lazy"
-                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
                   onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwh9rSfonL1yHDPmZnwgCOA8EKibXWT0MBsc9U")}
-                />
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
                   <h3 className="text-lg font-bold text-white mb-2">Beige Wall Portrait</h3>
@@ -1050,6 +1085,1013 @@ export default function HomePage() {
                     className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
                   >
                     {copiedKey === "men-13" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+          )}
+
+          {/* Baby Girl Category - Gallery */}
+          {(selectedCategory === "All" || selectedCategory === "Baby Girl") && (
+          <section className="space-y-6 mt-16">
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Image 1 - Garden Water Play */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwwAXWqTkNi0m4VxOsT8326pgFSDWGbXqnh5Bf"
+                  alt="Baby Girl gallery image 1"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwwAXWqTkNi0m4VxOsT8326pgFSDWGbXqnh5Bf")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Garden Water Play</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Create a retro vintage grainy but bright image of the reference picture, without changing the face, but dressed in a soft white summer dress KNEE LENGTH with delicate frills. The3.5-year-old baby girl is playing in a beautiful garden surrounded by flowers, greenery, and gentle sunlight. Her shoulder length curly hair flows naturally with a few tiny flowers tucked in, giving a dreamy and innocent charm. The atmosphere should feel whimsical and magical, with soft shadows, bright light, and a nostalgic, artistic aesthetic. Her pose should suggest that she is spraying water upwards in a hose pipe and playing, where deep shadows and dramatic contrasts add mystery and artistry to the scene, creating a moody yet enchanting cinematic effect. line a sunset or golden our time of the day. Fine droplets of water clearly visible on her face eyelashes and skin making her look radiant and cute in the rain. she can be facing upwards with a naughty and cute expression. the atmosphere is dreamy and vibrant, not dull with a soft golden touch.",
+                        "baby-girl-1"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "baby-girl-1" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 2 - Garden Swing */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwmiaj6vFQsyraRhvPnxS68Ajwm5eEfOL4H31D"
+                  alt="Baby Girl gallery image 2"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwmiaj6vFQsyraRhvPnxS68Ajwm5eEfOL4H31D")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Garden Swing</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Create a 3 year baby girl from this uploaded photo. She has long, flowing hair styled in loose waves, and a fresh, clean look. She is wearing a beautifully embroidered frock in a vibrant orange hue, with delicate mirror work. She is gracefully seated on a wooden swing, holding small yellow flowers in both hands, offering one towards with a warm smile. The background is a lush, vibrant garden filled with colorful marigolds and blooming flowers with a golden hour glow.",
+                        "baby-girl-2"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "baby-girl-2" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 3 - Happy Clapping */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw4Fj3loaYFX86A5gi7HbrqUwvNzJdpP9B4RST"
+                  alt="Baby Girl gallery image 3"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw4Fj3loaYFX86A5gi7HbrqUwvNzJdpP9B4RST")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Happy Clapping</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Create a retro vintage grainy but bright image of the reference picture, without changing the face, but dressed in a soft white summer dress KNEE LENGTH with delicate frills. The 3.5-year-old baby girl is PLAYING in a beautiful garden surrounded by flowers, greenery, and gentle sunlight. Her shoulder length curly hair flows naturally with a few tiny flowers tucked in, giving a dreamy and innocent charm. The atmosphere should feel whimsical and magical, with soft shadows, bright light, and a nostalgic, artistic aesthetic. Her pose should suggest that she is CLAPPING HER HANDS HAPPILY. It drizzles softy, where deep shadows and dramatic contrasts add mystery and artistry to the scene, creating a moody yet enchanting cinematic effect. line a sunset or golden our time of the day. Fine rain drops clearly visible on her face eyelashes and skin making her look radiant and cute in the rain. the atmosphere is dreamy and vibrant, not dull. with a soft golden touch.",
+                        "baby-girl-3"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "baby-girl-3" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 4 - Fountain Play */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwTjllYXpH8xseo7JY4wrVvp9IzPcy3ZjtRUFM"
+                  alt="Baby Girl gallery image 4"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwTjllYXpH8xseo7JY4wrVvp9IzPcy3ZjtRUFM")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Fountain Play</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Create a retro vintage grainy but bright image of the reference picture, without changing the face, but dressed in a soft white summer dress KNEE LENGTH with delicate frills. The 3.5-year-old baby girl is sitting in a beautiful garden surrounded by flowers, greenery, and gentle sunlight. Her shoulder length curly hair flows naturally with a few tiny flowers tucked in, giving a dreamy and innocent charm. The atmosphere should feel whimsical and magical, with soft shadows, bright light, and a nostalgic, artistic aesthetic. Her pose should suggest that she is sitting down near a fountain with her legs immersed in the fountain water. It drizzles softy, where deep shadows and dramatic contrasts add mystery and artistry to the scene, creating a moody yet enchanting cinematic effect. line a sunset or golden our time of the day. Fine rain drops clearly visible on her face eyelashes and skin making her look radiant and cute in the rain. the atmosphere is dreamy and vibrant, not dull. with a soft golden touch. make the lighting as dreamy as possible.",
+                        "baby-girl-4"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "baby-girl-4" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+          )}
+
+          {/* Baby Boy Category - Gallery */}
+          {(selectedCategory === "All" || selectedCategory === "Baby Boy") && (
+          <section className="space-y-6 mt-16">
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Image 1 - Vintage Studio Portrait */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwLgBpIwObUuOwQ3JFylTsXkfHctSMIBCxvrDj"
+                  alt="Baby Boy gallery image 1"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwLgBpIwObUuOwQ3JFylTsXkfHctSMIBCxvrDj")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Vintage Studio Portrait</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Use the exact face of the baby in the reference photo without altering facial features or identity. Photorealistic baby portrait in a vintage-inspired indoor studio. A baby with soft features, short dark hair, and expressive eyes is sitting on a wooden floor, wearing a light blue knit romper with a cream collar and button details. The baby is holding a fluffy brown teddy bear and gazing slightly upward with a curious expression.",
+                        "baby-boy-1"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "baby-boy-1" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 2 - White Fashion Editorial */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwljgd1Wq04S3xi5AcUH7YKGTCQzhJXPnpgo2V"
+                  alt="Baby Boy gallery image 2"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwljgd1Wq04S3xi5AcUH7YKGTCQzhJXPnpgo2V")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">White Fashion Editorial</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Take the face from the attached photo , same 100% same , he is a kid A stylish kid in a sleek, all-white outfit poses confidently against a pitch-white house background. He wears a tailored white suit, a white shirt with the top buttons open, and a subtle silver chain around his neck. He sports white sunglasses , exuding charisma and mystery. A luxury wristwatch glints on his left wrist. The lighting is dramatic, highlighting his facial features and casting soft shadows, creating a bold, high-fashion editorial look.",
+                        "baby-boy-2"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "baby-boy-2" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 3 - Vintage Suitcase Portrait */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwEJqpPmjCfTambo7hxXWv36wH15tjIge0iBdr"
+                  alt="Baby Boy gallery image 3"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwEJqpPmjCfTambo7hxXWv36wH15tjIge0iBdr")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Vintage Suitcase Portrait</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Take the face from the attached photo , same 100% same , he is a kid A stylish kid, facial will be the same as the reference image, with sharp features and dark tousled hair parted naturally. He is leaning casually against a vintage suitcase. He wears a textured brown blazer over an open-collar dark brown shirt, slightly unbuttoned at the top, paired with high-waisted light beige pleated trousers and a dark belt. The aesthetic is elegant and retro-inspired, with earthy tones. Minimalistic indoor background, cinematic warm natural lighting.",
+                        "baby-boy-3"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "baby-boy-3" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 4 - 90s Movie Style */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwLAoxGoObUuOwQ3JFylTsXkfHctSMIBCxvrDj"
+                  alt="Baby Boy gallery image 4"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwLAoxGoObUuOwQ3JFylTsXkfHctSMIBCxvrDj")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">90s Movie Style</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Take the face from the attached reference photo exactly 100% the same (do not alter his facial features, keep his identity intact). He is a kid. Create a retro, vintage-inspired, grainy yet bright image where the boy is dressed in a perfect black suit with Pinterest-style retro pants. The mood should feel like a 90s movie hair baddie. He holds a bunch of red roses in one hand while the other hand rests in his pocket, romanticizing a windy environment. The young boy stands against a solid deep shadow with dramatic contrast, evoking mystery and artistry. The lighting must be warm and golden, resembling a sunset or golden hour glow.",
+                        "baby-boy-4"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "baby-boy-4" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+          )}
+
+          {/* Navratri Special Category - Gallery */}
+          {(selectedCategory === "All" || selectedCategory === "Navratri Special") && (
+          <section className="space-y-6 mt-16">
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Image 1 - Night Festival Editorial */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwHNAjCBvcTbexiRGQSaVPyjDLoh0Nw7C31uA2"
+                  alt="Navratri Special gallery image 1"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwHNAjCBvcTbexiRGQSaVPyjDLoh0Nw7C31uA2")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Night Festival Editorial</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Generate a highly realistic night-time editorial photo using my uploaded selfie as the exact face—preserve my facial identity, features, undertones, and proportions without altering them. Match lighting, shadows, and makeup to the scene; keep natural skin texture. Nothing changes except the face. Create an outdoor festive setting at night with rows of warm fairy lights stretching horizontally across the background as soft bokeh. Distant practicals glow near the horizon. Ground is an open sandy/paved courtyard with subtle repeating texture; long, soft shadows. Wardrobe and styling (match exactly): black spaghetti-strap crop top; rich black lehenga with gold brocade motifs; a deep maroon dupatta with gold border draped from the right shoulder and falling down the front; oxidized silver jewelry—statement choker, large earrings, stacked bangles/bracelet; a slim silver floral waist chain (kamarbandh). No bindi, no sindoor, no extra jewelry or props. Pose and expression: full-length, centered. Both elbows raised; hands near the ears/neck as if adjusting jewelry. Torso open and relaxed; head turned slightly left with a soft, content smile and eyes looking into the distance. Keep hands/fingers and garment folds anatomically correct. Lighting and mood: warm ambient tungsten from the string lights with gentle front fill; clean highlights on jewelry; subtle rim on hair/shoulders; shallow depth of field so the lights blur while I stay sharp. Add a light filmic grain for realism. Identity rules: use ONLY my selfie to lock identity; preserve exact facial geometry and natural asymmetry. Remove any selfie accessories (glasses, cap, earbuds). Negative instructions: no plastic skin or harsh HDR/oversharpening, no warped hands/waist chain/dupattā, no text or watermark, no outfit or background changes, no cartoon/AI look, and no mismatched tones between face, neck, and midriff. Output: high-resolution color image matching this composition and styling with my exact face seamlessly integrated.",
+                        "navratri-1"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "navratri-1" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 2 - Dhunuchi Naach */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwq6fPjCNU4BmMWfYHFOxGdgRar1D06t8NZlQj"
+                  alt="Navratri Special gallery image 2"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwq6fPjCNU4BmMWfYHFOxGdgRar1D06t8NZlQj")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Dhunuchi Naach</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Create an ultra-realistic 8K image of a uploaded young Indian woman performing Dhunuchi Naach during Durga Puja. She is wearing a traditional red saree with golden borders, silver bangles, and testive jewelry. She holds o clay incense pot (dhunuchi) in both hands with smoke rising gracefully around her. Her expression is joyful, immersed in devotion, as she dances in front of a grand Durga idol decorated with flowers and garlands. Behind her, drummers and women in colorful sarees are watching, creating a festive and vibrant atmosphere. Natural soft sunlight enhances the smoke and golden tones of the scene.",
+                        "navratri-2"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "navratri-2" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 3 - Garbo Portrait */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwkbbMX54nfFMYyIDuqjoX73E4dcxeWPzgvlHr"
+                  alt="Navratri Special gallery image 3"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwkbbMX54nfFMYyIDuqjoX73E4dcxeWPzgvlHr")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Garbo Portrait</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Highly realistic cinematic portrait of c joung Gujarati woman in a traditional Garbo outfit. She is wearing a vibrant chaniya choli with mirror work, colortul embroidery, and a gracetully dupatta in authentic Gujarati style. She is adorned with oxidized silver jewelry - bangles, jhumka earrings, necklace, and maang tikka - completing the festive look. Inspired by the uploaded reference image, her pose is elegant and her expression warm and graceful. The background has a dramatic cinematic effect similar to the reference photo: a dark moody backdrop with a diagonal beam of golden light falling on her, creating depth and highlighting her features. The overall grading is warm with subtle film grain, giving a professional retro-cinematic Gujarati festive atmosphere.",
+                        "navratri-3"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "navratri-3" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 4 - Dandiya Dance */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwLiWVa7ObUuOwQ3JFylTsXkfHctSMIBCxvrDj"
+                  alt="Navratri Special gallery image 4"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwLiWVa7ObUuOwQ3JFylTsXkfHctSMIBCxvrDj")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Dandiya Dance</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Beautiful woman extract face from image playing dandiya with joyful abandon. She has a bright smile, her hair flying as she twirls, holding decorated dandiya sticks, dressed in a colorful, traditional ghagra choli with intricate embroidery and mirror work. The background is a lively blurred scene of a nighttime Navratri festival with other dancers, twinkling lights, and festive decorations. The image is captured trom a slightly low angle, emphasizing her dynamic movement.",
+                        "navratri-4"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "navratri-4" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 5 - Retro Garba Style */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwzsVOKUEuOU5j7RGPoWnLZQwFJb69v1KaNVlt"
+                  alt="Navratri Special gallery image 5"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwzsVOKUEuOU5j7RGPoWnLZQwFJb69v1KaNVlt")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Retro Garba Style</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Retro pinterest-inspired aesthetic portrait of the same girl (face exactly same), wearing a bright green and yellow garba dress with embroidery and traditional silver jewellery. Her wavy curly long hair with a flower tucked in moves slightly in the wind. She stands leaning gently against a wall, looking slightly to her right with an introspective happy mood. The lighting is golden hour, high contrast shadows, 90s Bollywood retro grain, cinematic mysterious vibe.",
+                        "navratri-5"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "navratri-5" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 6 - Vintage Garba Back Pose */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw1tTtc6KKMiwgGY1SZHo49FzdOE8cbm0rJCsU"
+                  alt="Navratri Special gallery image 6"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw1tTtc6KKMiwgGY1SZHo49FzdOE8cbm0rJCsU")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Vintage Garba Back Pose</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Start with the original image ensuring the facial features remain unchanged Garba dress: overlay a digital image of a traditional garba dress choose a design with intricate embroidery and vibrant colors typical of the 90s aesthetic. Jewellery: add statement piece like a choker bangles and earrings opt tor complement the dress Hairs: replace the original hair with a digital images of dark brown wavy curly long hair tick a small flower into the curly for a romantic touch. Background: use a solid wall background with deep shadows and contrast add a slight texture to the wall to enhance the vintage feel. Lighting: apply a warm golden tone to mimic the glow of sunset or golden hour ensure the lighting is dramatic to create a moody atmosphere Expression: keep the original expression intact maintaining the mood. Hand: keep the dandiya in hand Full pic back pose.",
+                        "navratri-6"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "navratri-6" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 7 - Bandhani Dupatta Portrait */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwaLHoMxiRDNb3IhfgrKEmuyxs7vH80dATFPYa"
+                  alt="Navratri Special gallery image 7"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwaLHoMxiRDNb3IhfgrKEmuyxs7vH80dATFPYa")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Bandhani Dupatta Portrait</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "cinematic portrait of a young Indian woman during Navratri festival, wearing a traditional colorful Bandhani dupatta with intricate patterns, silver jhumkas, and bangles. She holds a dandiya stick gracefully in her hands. Her long wavy hair flows naturally, glowing softly in warm golden hour lighting. Festive lights twinkle in the blurred background, creating a dreamy and cultural celebration atmosphere. Ultra realistic, high detail, cinematic photography style.",
+                        "navratri-7"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "navratri-7" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+          )}
+
+          {/* Couple Category - Gallery */}
+          {(selectedCategory === "All" || selectedCategory === "Couple") && (
+          <section className="space-y-6 mt-16">
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Image 1 - Red Saree Couple */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwwa3f2KAkNi0m4VxOsT8326pgFSDWGbXqnh5B"
+                  alt="Couple gallery image 1"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwwa3f2KAkNi0m4VxOsT8326pgFSDWGbXqnh5B")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Red Saree Couple</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Create a retro, vintage-inspired image – grainy yet bright – based on the reference picture. The girl should be draped in a perfect red, Pinterest-style aesthetic retro saree, and the guy should be wearing a white kurta with a Pinterest-style Chinese collar in a retro look. The vibe must capture the essence of a 90s movie brown-haired baddie, with wavy curls and a small flower tucked visibly into her hair, and the hair should fly enhanced by a windy, romantic atmosphere. The guy should be holding her waist and looking deep into her eyes. They stand against a solid wall, where deep shadows and dramatic contrasts add mystery and artistry to the scene, creating a moody yet enchanting cinematic effect. They should be looking at each other.",
+                        "couple-1"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "couple-1" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 2 - Purple Chiffon Couple */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwsHUkQbrA9yP62t1XhHlQpzUKS8a4MNTRjOom"
+                  alt="Couple gallery image 2"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwsHUkQbrA9yP62t1XhHlQpzUKS8a4MNTRjOom")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Purple Chiffon Couple</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Create a retro, vintage-inspired image - grainy yet bright - based on the reference picture. The girl should be draped in a perfect purple chiffon, Pinterest-style aesthetic saree. The vibe must capture the essence of a 90s movie dark-brown-haired baddie, with silky hair and a small flower tucked visibly into her hair, enhanced by a windy, romantic atmosphere. She is standing against a wall with the shadow of a tree, where deep shadows and dramatic contrasts add mystery and artistry to the scene, creating a moody yet enchanting cinematic effect. Her pose should suggest that she is adjusting her hair. And the boy must wear black shirt with suitable pants add watch he must be behind the girl.",
+                        "couple-2"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "couple-2" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 3 - Brown Saree Couple */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwNaSgigbTHRAxyeo1PknU9XO4BQqv67SVLbKa"
+                  alt="Couple gallery image 3"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwNaSgigbTHRAxyeo1PknU9XO4BQqv67SVLbKa")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Brown Saree Couple</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Create a retro vintage grainy but bright image of the reference picture but draped in a perfect brown Pinterest aesthetic retro saree for girl and suite for boy. It must feel like a 90s movie black hair baddie with A small flower tucked visibly in long wavy hair and romanticising windy environment. The girl and boy standing against a solid wall deep shadows and contrast drama, creating a mysterious and artistic atmosphere where the lighting is warm with a golden tones of evoking a sunset or golden hour glow. The background is minimalist and slightly textured the expression on her face is moody, calm yet happy and introspective.",
+                        "couple-3"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "couple-3" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 4 - Red Kurta Couple */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwODJq0k891UNau7cYf2wMep30kjvxyXARgPFr"
+                  alt="Couple gallery image 4"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwODJq0k891UNau7cYf2wMep30kjvxyXARgPFr")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Red Kurta Couple</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Create a retro, vintage-inspired image – grainy yet bright – based on the reference picture. The girl should be draped in a perfect red, Pinterest-style aesthetic retro saree, and the guy should be wearing a white kurta with a Pinterest-style Chinese collar in a retro look. The vibe must capture the essence of a 90s movie brown-haired baddie, with wavy curls and a small flower tucked visibly into her hair, and the hair should fly enhanced by a windy, romantic atmosphere. The guy should be holding her waist and looking deep into her eyes. They stand against a solid wall, where deep shadows and dramatic contrasts add mystery and artistry to the scene, creating a moody yet enchanting cinematic effect. They should be looking at each other.",
+                        "couple-4"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "couple-4" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 5 - Brown Suite Couple */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwFGAp856dIoRsHkT3nZS6YcalbweLB5izVrGJ"
+                  alt="Couple gallery image 5"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwFGAp856dIoRsHkT3nZS6YcalbweLB5izVrGJ")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Brown Suite Couple</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Create a retro vintage grainy but bright image of the reference picture but draped in a perfect brown Pinterest y aesthetic retro saree for girl and 582 suite for boy. It must feel like a 90s movie red hair baddie with a small flower tuck visibly in the curls and windy environment romanticising for girl. The girl and boy is standing against a solid wall deep shadows and contrast drama, creating a mysterious and artistic atmosphere.",
+                        "couple-5"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "couple-5" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 6 - Blue Cotton Couple */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwE8LzzUjCfTambo7hxXWv36wH15tjIge0iBdr"
+                  alt="Couple gallery image 6"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwE8LzzUjCfTambo7hxXWv36wH15tjIge0iBdr")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Blue Cotton Couple</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "First ask me to upload my selfie. Then Create a retro, vintage-inspired image - grainy yet right - based on the reference picture. The girl should be draped in a perfect blue cotton saree with small white flower prints, paired with a white blouse with sleeves above the elbow, styled in a Pinterest-inspired aesthetic. The guy should be in a cotton shirt and pant with a flower bouquet in hand. The vibe must capture the essence of a 90s movies dark- brown-haired baddie, with silky hair and a small flower tucked visibly into her hair, enhanced by a windy, romantic atmosphere. She is sitting on a wooden bench as a few leaves blow in the air, while dramatic contrasts add mystery and artistry to the scene while the guy is bending in the wooden bench behind her smiling at her, creating a moody yet enchanting cinematic effect.",
+                        "couple-6"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "couple-6" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 7 - Off White Couple */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw70ErklgrCexzG3sdp8WYDicNkoUbPOmTa0nI"
+                  alt="Couple gallery image 7"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw70ErklgrCexzG3sdp8WYDicNkoUbPOmTa0nI")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Off White Couple</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "First ask me to upload my selfie. Then Create a retro, vintage - inspired image-grainy yet right- based on the reference picture Triea the google gemini as a couple The girl should be draped in a perfect Off white cotton saree With a red blouse. Pinterest styles aesthetic saree. The vibe must capture the essence of a 90s movie dark brown -haired baddie, enhanced by a windy, romantic atmosphere and the guy should be wearing an off white shirt kurta. She stands against an old wooden door, where deep shadows and dramatic contrast add mystery and artistry to the scene, creating a moody yet enchanting cinematic effect. Make the girl pose like she's walking and looking back while the guys is holding her saree pallu very evidently and the guy should be looking at the girl.",
+                        "couple-7"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "couple-7" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 8 - Yellow Chiffon Couple */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw0XqANnvEiYx46uGItXmDjA3PwKcqrgvpnF7H"
+                  alt="Couple gallery image 8"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw0XqANnvEiYx46uGItXmDjA3PwKcqrgvpnF7H")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Yellow Chiffon Couple</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "First ask me to upload a couple photo or upload 2 photos of a girl and a boy. He will be holding my hand from behind dressed in retro style with a black shirt, carrying a I will be in perfect plain chiffon saree, yellow in color, giving a Pinterest y aesthetic retro vibe. Think of a 90s movie feel-dark brown wavy curly hair with a small flower tucked visibly into the curls, romanticizing in a windy environment. I'll be standing against a solid wall with deep shadows and contrast drama, creating mysterious and artistic atmosphere. The lighting will be warm with golden tones, evoking a sunset or golden hour glow. The background will stay minimalistic and slightly textured, while my expression will be moody, calm yet happy and introspective.",
+                        "couple-8"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "couple-8" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 9 - Red Chiffon Couple */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwOidm8k91UNau7cYf2wMep30kjvxyXARgPFrB"
+                  alt="Couple gallery image 9"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwOidm8k91UNau7cYf2wMep30kjvxyXARgPFrB")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Red Chiffon Couple</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "First ask me to upload a couple photo or upload 2 photos of a girl and a boy. He will be sitting & giving me flower seeing me. in a romantic way dressed in a retro style with a black shirt. I will be in a perfect plain chiffon saree, red in color, giving a Pinterest y aesthetic retro vibe. Think of a 90s movie feel-dark brown wavy curly hair with a small flower tucked visibly into the curls, romanticizing in a windy environment. I'll be sitting against the retro wall. with deep shadows and contrast drama, creating a mysterious and artistic.",
+                        "couple-9"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "couple-9" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 10 - Blue Winter Couple */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                  <img
+                  src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOweff96hxc9HQ3GZfqXJBtES2vMxYF5pV0bsCO"
+                  alt="Couple gallery image 10"
+                  loading="lazy"
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                  onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOweff96hxc9HQ3GZfqXJBtES2vMxYF5pV0bsCO")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Blue Winter Couple</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Create a retro vintage grainy but bright image of the reference picture with the girl draped in a perfect plain blue chiffon saree and the boy in a black Winter wear, Pinteresty aesthetic retro saree vibe, feeling like a 90s movie with dark brown wavy curly hair and a small flower tucked visibly into her curls, romanticising a Snowy environment; the girl is making snow ball and throwing at him. The scene look like they are playing and enjoying each other company. Preserve the face and it's facial details.",
+                        "couple-10"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "couple-10" ? (
                       <>
                         <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                         Copied!

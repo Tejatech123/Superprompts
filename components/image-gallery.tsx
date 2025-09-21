@@ -126,7 +126,7 @@ export function ImageGallery({ onImageClick }: ImageGalleryProps) {
                   "group relative overflow-hidden border-border bg-card transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu will-change-transform",
                 )}
               >
-                <div className="overflow-hidden">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
                   {image.link ? (
                     <a href={image.link} target="_blank" rel="noopener noreferrer">
                       <img
@@ -135,7 +135,7 @@ export function ImageGallery({ onImageClick }: ImageGalleryProps) {
                         fetchPriority={index === 0 ? "high" : undefined}
                         loading={index === 0 ? "eager" : "lazy"}
                         decoding="async"
-                        className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-105 transform-gpu [image-rendering:auto] cursor-pointer"
+                        className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 transform-gpu [image-rendering:auto] cursor-pointer"
                         onClick={() => onImageClick?.(image.src || "/placeholder.svg")}
                       />
                     </a>
@@ -146,7 +146,7 @@ export function ImageGallery({ onImageClick }: ImageGalleryProps) {
                       fetchPriority={index === 0 ? "high" : undefined}
                       loading={index === 0 ? "eager" : "lazy"}
                       decoding="async"
-                      className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-105 transform-gpu [image-rendering:auto] cursor-pointer"
+                      className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 transform-gpu [image-rendering:auto] cursor-pointer"
                       onClick={() => onImageClick?.(image.src || "/placeholder.svg")}
                     />
                   )}

@@ -1,12 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabaseClient";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { AuthHeader } from "@/components/auth-header";
+import { HomeHeader } from "@/components/home-header";
 
-export default function Home() {
+export default function HomePage() {
+  const router = useRouter();
   const { toast } = useToast();
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -46,10 +51,47 @@ export default function Home() {
     }
   }
 
+  useEffect(() => {
+    // Get initial session
+    const getSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        setUser(session.user);
+      } else {
+        router.push("/sign-in");
+      }
+      setLoading(false);
+    };
+
+    getSession();
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUser(session.user);
+      } else {
+        router.push("/sign-in");
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [router]);
+
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
-      <AuthHeader />
+      <HomeHeader />
       
       {/* Image Preview Modal */}
       {previewImage && (
@@ -67,12 +109,12 @@ export default function Home() {
               </svg>
             </button>
             <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
-            <img
-              src={previewImage}
-              alt="Preview"
-              className="w-full h-full object-contain rounded-lg"
-              onClick={(e) => e.stopPropagation()}
-            />
+              <img
+                src={previewImage}
+                alt="Preview"
+                className="w-full h-full object-contain rounded-lg"
+                onClick={(e) => e.stopPropagation()}
+              />
             </div>
           </div>
         </div>
@@ -88,7 +130,7 @@ export default function Home() {
               <p className="mt-2 text-sm text-muted-foreground">
                 Paste in <span className="text-green-500 font-medium">Gemini</span> with your photo to create a similar look. Results may vary.
               </p>
-    </div>
+            </div>
 
             <div className="flex flex-wrap items-center justify-center gap-2">
               {[

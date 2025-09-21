@@ -23,13 +23,17 @@ export default function SignUpPage() {
     if (isSubmitting) return;
     setIsSubmitting(true);
     try {
-      const { error } = await supabase.auth.signUp({ email, password });
+      const { data, error } = await supabase.auth.signUp({ email, password });
       if (error) {
         toast({ title: "Sign up failed", description: error.message, variant: "destructive" });
         return;
       }
-      toast({ title: "Check your email", description: "We sent a confirmation link." });
-      router.push("/sign-in");
+      if (data.user) {
+        toast({ title: "Success!", description: "Account created successfully." });
+        router.push("/home");
+      } else {
+        toast({ title: "Check your email", description: "We sent a confirmation link." });
+      }
     } catch (err: any) {
       toast({ title: "Unexpected error", description: err?.message ?? "Please try again.", variant: "destructive" });
     } finally {

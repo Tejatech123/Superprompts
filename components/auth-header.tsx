@@ -4,10 +4,12 @@ import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useAuth } from "@/contexts/AuthContext"
 
-export function HomeHeader() {
+export function AuthHeader() {
   const { theme, setTheme } = useTheme()
   const router = useRouter()
+  const { user, signOut } = useAuth()
 
   const isDark = theme === "dark"
 
@@ -19,21 +21,31 @@ export function HomeHeader() {
     router.push("/sign-up")
   }
 
+  const handleSignOut = async () => {
+    await signOut()
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 max-w-screen-xl items-center justify-between px-4">
         {/* Left: Brand */}
         <div className="flex items-center">
-          <Link href="/home" className="text-2xl font-bold tracking-tight text-foreground transition-colors hover:text-accent">
+          <Link href={user ? "/home" : "/"} className="text-2xl font-bold tracking-tight text-foreground transition-colors hover:text-accent">
             SuperPrompts
           </Link>
         </div>
 
         {/* Right: Navigation */}
         <div className="flex items-center gap-2 sm:gap-3">
-          <Button onClick={handleSignUp} variant="outline" className="h-9 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-colors">
-            Sign Up
-          </Button>
+          {user ? (
+            <Button onClick={handleSignOut} variant="outline" className="h-9 hover:bg-red-500 hover:text-white hover:border-red-500 transition-colors">
+              Sign Out
+            </Button>
+          ) : (
+            <Button onClick={handleSignUp} variant="outline" className="h-9 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-colors">
+              Sign Up
+            </Button>
+          )}
           <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-9 w-9 transition-colors hover:bg-blue-500 hover:text-white" aria-label="Toggle theme">
             {isDark ? (
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
