@@ -91,7 +91,7 @@ export default function HomePage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+            <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden mx-auto">
               <img
                 src={previewImage}
                 alt="Preview"
@@ -111,7 +111,7 @@ export default function HomePage() {
             <div className="text-center mb-4">
               <h2 className="text-2xl font-bold text-foreground">Tap an image to copy the prompt</h2>
               <p className="mt-2 text-sm text-muted-foreground">
-                Paste in <span className="text-green-500 font-medium">Gemini</span> with your photo to create a similar look. Results may vary.
+                Paste in <span className="text-green-500 font-medium">Gemini</span> or <span className="text-green-500 font-medium">ChatGPT</span> with your photo to create a similar look. Results may vary.
               </p>
             </div>
 
@@ -136,7 +136,7 @@ export default function HomePage() {
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
                     className={
-                      `rounded-full px-4 py-2 text-sm border transition-colors ` +
+                      `rounded-full px-3 py-1.5 text-xs border transition-colors ` +
                       (isActive
                         ? `bg-foreground text-background border-transparent`
                         : `bg-transparent text-foreground border-border hover:bg-muted/60`)
@@ -154,10 +154,10 @@ export default function HomePage() {
           {(selectedCategory === "All" || selectedCategory === "Women") && (
           <section className="space-y-6">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {/* Image 1 - landing style */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden mx-auto">
                   <img
                     src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwWVWoHbGn0A6bF5yLp2EtrRBMslG4CHkwIXmd"
                     alt="Women gallery image 1"
@@ -196,7 +196,7 @@ export default function HomePage() {
 
               {/* Image 2 - landing style */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden mx-auto">
                   <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwPSz9PLUBMVZJ47vNpc91sLzxKCkmFDnGX6q3"
                   alt="Women gallery image 2"
@@ -591,7 +591,7 @@ export default function HomePage() {
           {(selectedCategory === "All" || selectedCategory === "Men") && (
           <section className="space-y-6 mt-16">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {/* Image 1 - Stylish Man Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
@@ -1106,7 +1106,7 @@ export default function HomePage() {
           {(selectedCategory === "All" || selectedCategory === "Baby Girl") && (
           <section className="space-y-6 mt-16">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {/* Image 1 - Garden Water Play */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
@@ -1270,7 +1270,7 @@ export default function HomePage() {
           {(selectedCategory === "All" || selectedCategory === "Baby Boy") && (
           <section className="space-y-6 mt-16">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {/* Image 1 - Vintage Studio Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
@@ -1434,7 +1434,7 @@ export default function HomePage() {
           {(selectedCategory === "All" || selectedCategory === "Navratri Special") && (
           <section className="space-y-6 mt-16">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {/* Image 1 - Night Festival Editorial */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
@@ -1715,7 +1715,7 @@ export default function HomePage() {
           {(selectedCategory === "All" || selectedCategory === "Couple") && (
           <section className="space-y-6 mt-16">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {/* Image 1 - Red Saree Couple */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">

@@ -66,7 +66,7 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+            <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden mx-auto">
             <img
               src={previewImage}
               alt="Preview"
@@ -80,13 +80,72 @@ export default function Home() {
       
       <main className="container mx-auto px-4 py-12">
         <div className="max-w-4xl mx-auto">
+          {/* Minimal Landing Hero + Showcase */}
+          <section className="mb-16">
+            {/* Header + Hero */}
+            <div className="text-center py-8">
+              <p className="text-xs tracking-[0.2em] text-muted-foreground uppercase">COPY THE PROMPT. CREATE THE LOOK.</p>
+              <h1 className="mt-4 text-4xl sm:text-6xl font-extrabold text-foreground leading-[1.1]">
+                Viral AI Image Prompts
+              </h1>
+              {/* Decorative stars */}
+              <div className="relative mx-auto mt-2 h-0">
+                <span className="absolute -top-5 left-1/3 text-pink-400">✦</span>
+                <span className="absolute -top-4 right-1/4 text-purple-400">✦</span>
+                <span className="absolute -top-2 left-1/5 text-purple-300">✦</span>
+              </div>
+            </div>
+
+            {/* Image Showcase with subtle grid */}
+              <div className="relative">
+              {/* grid background */}
+              <div
+                aria-hidden
+                className="absolute inset-0 -z-10 opacity-60"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px)",
+                  backgroundSize: "48px 48px",
+                  backgroundPosition: "center",
+                }}
+              />
+
+              <div className="flex items-end justify-center gap-4 sm:gap-6 px-2">
+                {[
+                  // 1st: Couple 7th image
+                  "https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw70ErklgrCexzG3sdp8WYDicNkoUbPOmTa0nI",
+                  // 2nd: Baby Girl 1st image
+                  "https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwwAXWqTkNi0m4VxOsT8326pgFSDWGbXqnh5Bf",
+                  // 3rd: Baby Boy 4th image
+                  "https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwLAoxGoObUuOwQ3JFylTsXkfHctSMIBCxvrDj",
+                  // 4th: Navratri Special 4th image
+                  "https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwLiWVa7ObUuOwQ3JFylTsXkfHctSMIBCxvrDj",
+                  // 5th: Men 3rd image
+                  "https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwpXSpWieNu726RMeTXDadHG1zIB3tvw84Ynxh",
+                ].map((src, i) => (
+                  <div
+                    key={src}
+                    className={
+                      "relative w-64 sm:w-72 md:w-80 aspect-[4/5] rounded-2xl overflow-hidden shadow-md bg-card " +
+                      (i % 2 === 0 ? "-rotate-3" : "rotate-3")
+                    }
+                    style={{ transformOrigin: "center bottom" }}
+                  >
+                    <img src={src} alt="Showcase" className="h-full w-full object-cover" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            
+          </section>
 
           {/* Prompt helper header + filters */}
           <section className="mb-8">
             <div className="text-center mb-4">
               <h2 className="text-2xl font-bold text-foreground">Tap an image to copy the prompt</h2>
               <p className="mt-2 text-sm text-muted-foreground">
-                Paste in <span className="text-green-500 font-medium">Gemini</span> with your photo to create a similar look. Results may vary.
+                Paste in <span className="text-green-500 font-medium">Gemini</span> or <span className="text-green-500 font-medium">ChatGPT</span> with your photo to create a similar look. Results may vary.
               </p>
     </div>
 
@@ -111,7 +170,7 @@ export default function Home() {
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
                     className={
-                      `rounded-full px-4 py-2 text-sm border transition-colors ` +
+                      `rounded-full px-3 py-1.5 text-xs border transition-colors ` +
                       (isActive
                         ? `bg-foreground text-background border-transparent`
                         : `bg-transparent text-foreground border-border hover:bg-muted/60`)
@@ -129,10 +188,10 @@ export default function Home() {
           {(selectedCategory === "All" || selectedCategory === "Women") && (
           <section className="space-y-6">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {/* Image 1 - landing style */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden mx-auto">
                   <img
                     src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwWVWoHbGn0A6bF5yLp2EtrRBMslG4CHkwIXmd"
                     alt="Women gallery image 1"
@@ -171,7 +230,7 @@ export default function Home() {
 
               {/* Image 2 - landing style */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden mx-auto">
                   <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwPSz9PLUBMVZJ47vNpc91sLzxKCkmFDnGX6q3"
                   alt="Women gallery image 2"
@@ -210,7 +269,7 @@ export default function Home() {
 
               {/* Image 3 - landing style */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden mx-auto">
                   <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwik4M2DTxnVosi45XmY9zrfg0QSaehtvdlOHM"
                   alt="Women gallery image 3"
@@ -249,7 +308,7 @@ export default function Home() {
 
               {/* Image 4 - landing style */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden mx-auto">
                   <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwaUjfSMiRDNb3IhfgrKEmuyxs7vH80dATFPYa"
                   alt="Women gallery image 4"
@@ -288,7 +347,7 @@ export default function Home() {
 
               {/* Image 5 - landing style */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
-                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden mx-auto">
                   <img
                   src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwwZ2WhVkNi0m4VxOsT8326pgFSDWGbXqnh5Bf"
                   alt="Women gallery image 5"
@@ -566,7 +625,7 @@ export default function Home() {
           {(selectedCategory === "All" || selectedCategory === "Men") && (
           <section className="space-y-6 mt-16">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {/* Image 1 - Stylish Man Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
@@ -1081,7 +1140,7 @@ export default function Home() {
           {(selectedCategory === "All" || selectedCategory === "Baby Girl") && (
           <section className="space-y-6 mt-16">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {/* Image 1 - Garden Water Play */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
@@ -1245,7 +1304,7 @@ export default function Home() {
           {(selectedCategory === "All" || selectedCategory === "Baby Boy") && (
           <section className="space-y-6 mt-16">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {/* Image 1 - Vintage Studio Portrait */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
@@ -1409,7 +1468,7 @@ export default function Home() {
           {(selectedCategory === "All" || selectedCategory === "Navratri Special") && (
           <section className="space-y-6 mt-16">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {/* Image 1 - Night Festival Editorial */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
@@ -1690,7 +1749,7 @@ export default function Home() {
           {(selectedCategory === "All" || selectedCategory === "Couple") && (
           <section className="space-y-6 mt-16">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
               {/* Image 1 - Red Saree Couple */}
               <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
                 <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden">
