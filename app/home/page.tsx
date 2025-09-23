@@ -120,8 +120,7 @@ export default function HomePage() {
                 "All",
                 "Women",
                 "Men",
-                "Baby Girl",
-                "Baby Boy",
+                "Baby",
                 "Navratri Special",
                 "Family",
                 "Couple",
@@ -1102,8 +1101,8 @@ export default function HomePage() {
           </section>
           )}
 
-          {/* Baby Girl Category - Gallery */}
-          {(selectedCategory === "All" || selectedCategory === "Baby Girl") && (
+          {/* Baby Category - Gallery (Baby Girl) */}
+          {(selectedCategory === "All" || selectedCategory === "Baby") && (
           <section className="space-y-6 mt-16">
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
@@ -1266,8 +1265,8 @@ export default function HomePage() {
           </section>
           )}
 
-          {/* Baby Boy Category - Gallery */}
-          {(selectedCategory === "All" || selectedCategory === "Baby Boy") && (
+          {/* Baby Category - Gallery (Baby Boy) */}
+          {(selectedCategory === "All" || selectedCategory === "Baby") && (
           <section className="space-y-6 mt-16">
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
