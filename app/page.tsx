@@ -2303,6 +2303,200 @@ export default function Home() {
                 </div>
               </div>
 
+              {/* Image 5 - Helicopter Product Ad (from Home) */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden mx-auto">
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw8Zu4mDItMKwFVUYDbLaHvXOZicJ5BW2ejC6h"
+                    alt="Ads gallery image 5"
+                    loading="lazy"
+                    className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                    onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw8Zu4mDItMKwFVUYDbLaHvXOZicJ5BW2ejC6h")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Helicopter Product Ad</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "A small helicopter carrying a giant [PRODUCT NAME] iconic product, the helicopter is painted with designed brand theme, against blue sky, white cloud, lens flare, a product ad with a logo and tiny brand slogan on the bottom",
+                        "ads-5"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "ads-5" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 1 - Ice Block Product (from Home) */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden mx-auto">
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwSYqfTM6nmCYFOsxWu9vc4SaBoGgfT3Rb5N0l"
+                    alt="Ads gallery image 1"
+                    loading="lazy"
+                    className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                    onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwSYqfTM6nmCYFOsxWu9vc4SaBoGgfT3Rb5N0l")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Ice Block Product</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Create a hyperrealistic 3D render of the provided object, (bottle) fully encased in a naturally-formed, melting block of ice. The object must retain 100% fidelity to its original form, color, gloss, surface finish, proportions, and all visible details or labels. The result must resemble a real-world photo of the object physically frozen inside ice-not digitally overlaid or placed in a void...... aspect ration 1:1.",
+                        "ads-1"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "ads-1" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 2 - Vacuum Sealed Package (from Home) */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden mx-auto">
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwNEeNP7bTHRAxyeo1PknU9XO4BQqv67SVLbKa"
+                    alt="Ads gallery image 2"
+                    loading="lazy"
+                    className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                    onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwNEeNP7bTHRAxyeo1PknU9XO4BQqv67SVLbKa")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Vacuum Sealed Package</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "A real industrial vacuum-sealed package with a compressed, wrinkled plastic bag in the freezer. Inside the transparent packaging is the subject from my uploaded photo, tightly packed and preserved. The background is simple, with strong color contrast that emphasizes the sealed object. Isolated focus on the vacuum-packed subject, realistic and detailed. Aspect ration 1:1.",
+                        "ads-2"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "ads-2" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 3 - Jungle Product Ad (from Home) */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden mx-auto">
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwFVcK2OdIoRsHkT3nZS6YcalbweLB5izVrGJA"
+                    alt="Ads gallery image 3"
+                    loading="lazy"
+                    className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                    onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwFVcK2OdIoRsHkT3nZS6YcalbweLB5izVrGJA")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Jungle Product Ad</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Create a cinematic product ad for [PRODUCT NAME ], set deep in a lush tropical jungle.Their classic product rests on a textured stone surface, surrounded by brand-aligned plants or floral. Subtle symbolic elements like brand animal or nature motif are integrated into the scene. Lighting is soft and diffused, simulating golden hour rays filtering through the canopy with ambient backlight. Color palette: Brand colors. Style: cinematic, moody, nature-infused luxury. Aspect ratio: 1:1.",
+                        "ads-3"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "ads-3" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Image 4 - Giant Statue in Bangalore (from Home) */}
+              <div className="group relative overflow-hidden border-border bg-card rounded-2xl transition-all duration-300 hover:scale-103 hover:shadow-2xl hover:shadow-accent/20 transform-gpu">
+                <div className="aspect-[282.4/370.4] w-[282.4px] overflow-hidden mx-auto">
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwh96YowCL1yHDPmZnwgCOA8EKibXWT0MBsc9U"
+                    alt="Ads gallery image 4"
+                    loading="lazy"
+                    className="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                    onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwh96YowCL1yHDPmZnwgCOA8EKibXWT0MBsc9U")}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:translate-y-full md:group-hover:translate-y-0 translate-y-0 transition-transform duration-300">
+                  <h3 className="text-lg font-bold text-white mb-2">Giant Statue in Bangalore</h3>
+                  <p className="text-sm text-white/80 mb-3">Tap to copy prompt</p>
+                  <button
+                    onClick={() =>
+                      copyPromptLandingStyle(
+                        "Create a giant hyper-realistic statue based on the given photo. keeping the original face exactly the same without changes. The statue stands tall in the middle of a roundabout in Banglore, near a famous historical landmark. The statue is 70% completed, with most of its structure detailed and finished, while the remaining 10% is still under construction, surrounded by scaffolding. A few construction workers in yellow helmets and orange vests are welding, climbing, and finishing the final sections. Only some small exposed metal framework is visible on the unfinished part. The background shows the realistic atmosphere of Bangalore City: crowded streets with colorful rickshaws, packed buses, and small cars circling the roundabout. Street vendors with tea stalls, fruit carts, and colorful umbrellas line the roadside. Shop signs, big billboards, and messy hanging electric wires crisscross above the streets, creating the typical Bangalore city vibe. The bright daytime sky shines above, with tropical trees and a bustling, lively atmosphere.",
+                        "ads-4"
+                      )
+                    }
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground rounded-md py-2 text-sm font-medium inline-flex items-center justify-center"
+                  >
+                    {copiedKey === "ads-4" ? (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg className="mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        Copy
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
           </section>
           )}
