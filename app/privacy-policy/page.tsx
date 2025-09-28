@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import BackButton from '@/components/back-button'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy - Superprompts',
@@ -11,6 +12,12 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       <div className="container mx-auto px-4 py-16 max-w-4xl">
+        
+        {/* Back Button */}
+        <div className="mb-8">
+          <BackButton href="/" text="← Back to Home" />
+        </div>
+        
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
             Privacy Policy
@@ -248,9 +255,9 @@ export default function PrivacyPolicyPage() {
                 </p>
                 <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-lg">
                   <p className="text-slate-700 dark:text-slate-300">
-                    <strong>Email:</strong> privacy@superprompts.com<br />
-                    <strong>Address:</strong> 123 Innovation Drive, Tech City, TC 12345<br />
-                    <strong>Phone:</strong> +1 (555) 123-4567
+                    <strong>Email:</strong> Superprompts30@gmail.com<br />
+                    <strong>Instagram:</strong> <a href="https://www.instagram.com/superprompts.in" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">@superprompts.in</a><br />
+                    <strong>Built by:</strong> <a href="https://www.instagram.com/reach.ai_/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">@reach.ai_</a>
                   </p>
                 </div>
                 <p className="text-sm text-slate-600 dark:text-slate-400">

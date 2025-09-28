@@ -1,58 +1,4 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
-import BackButton from '@/components/back-button'
-import NextBlogButton from '@/components/next-blog-button'
-import { Calendar, Clock, ArrowLeft, Share2, BookOpen, TrendingUp } from 'lucide-react'
-
-export const metadata: Metadata = {
-  title: '10 AI Prompts That Will Transform Your Daily Productivity - Superprompts Blog',
-  description: 'Explore proven prompt templates that can streamline your workflow and boost efficiency across various tasks.',
-}
-
-export default function ProductivityPromptsPage() {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
-      <div className="container mx-auto px-4 py-16 max-w-4xl">
-        
-        {/* Back Button */}
-        <div className="mb-8">
-          <BackButton href="/blog" text="← Back to Blog" />
-        </div>
-
-        {/* Article Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary">Productivity</Badge>
-            <span className="text-slate-500 dark:text-slate-400">•</span>
-            <div className="flex items-center gap-1 text-sm text-slate-500 dark:text-slate-400">
-              <Calendar className="h-4 w-4" />
-              January 5, 2024
-            </div>
-            <span className="text-slate-500 dark:text-slate-400">•</span>
-            <div className="flex items-center gap-1 text-sm text-slate-500 dark:text-slate-400">
-              <Clock className="h-4 w-4" />
-              6 min read
-            </div>
-          </div>
-          
-          <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-            10 AI Prompts That Will Transform Your Daily Productivity
-          </h1>
-          
-          <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
-            Explore proven prompt templates that can streamline your workflow and boost efficiency across various tasks.
-          </p>
-        </div>
-
-        {/* Article Content */}
-        <Card className="shadow-lg">
-          <CardContent className="p-8">
-            <div className="whitespace-pre-line text-slate-700 dark:text-slate-300 leading-relaxed">
-{`10 AI Prompts That Will Transform Your Daily Productivity
+10 AI Prompts That Will Transform Your Daily Productivity
 
 In today's fast-paced world, productivity isn't just about working harder—it's about working smarter. AI-powered tools have revolutionized how we approach daily tasks, but the key to unlocking their full potential lies in crafting the right prompts. Here are ten battle-tested prompts that can transform your daily workflow.
 
@@ -130,26 +76,4 @@ Remember, the goal isn't to use all these prompts every day, but to have them re
 
 Ready to Boost Your Productivity?
 
-These prompts are just the beginning. Which one will you try first to transform your daily workflow?`}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Share Section */}
-        <div className="mt-8 flex items-center justify-between">
-          <Button variant="outline" className="flex items-center gap-2">
-            <Share2 className="h-4 w-4" />
-            Share Article
-          </Button>
-        </div>
-
-        {/* Next Blog Button */}
-        <NextBlogButton 
-          href="/blog/mastering-ai-prompts-beginners-guide" 
-          title="Mastering AI Prompts: A Complete Beginner's Guide" 
-        />
-
-      </div>
-    </div>
-  )
-}
+These prompts are just the beginning. Which one will you try first to transform your daily workflow?

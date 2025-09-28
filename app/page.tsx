@@ -2557,6 +2557,13 @@ export default function Home() {
             </div>
           </section>
 
+          {/* Copyright Notice */}
+          <div className="text-center py-8 border-t border-border/50">
+            <p className="text-sm text-muted-foreground">
+              © 2025 superprompts all rights reserved
+            </p>
+          </div>
+
         </div>
       </main>
     </div>

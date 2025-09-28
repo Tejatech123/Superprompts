@@ -1,58 +1,4 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
-import BackButton from '@/components/back-button'
-import NextBlogButton from '@/components/next-blog-button'
-import { Calendar, Clock, ArrowLeft, Share2, BookOpen, Zap } from 'lucide-react'
-
-export const metadata: Metadata = {
-  title: 'Advanced Prompt Engineering Techniques for Power Users - Superprompts Blog',
-  description: 'Discover sophisticated prompt engineering strategies used by AI professionals to achieve complex, nuanced outputs.',
-}
-
-export default function AdvancedPromptTechniquesPage() {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
-      <div className="container mx-auto px-4 py-16 max-w-4xl">
-        
-        {/* Back Button */}
-        <div className="mb-8">
-          <BackButton href="/blog" text="← Back to Blog" />
-        </div>
-
-        {/* Article Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-2 mb-4">
-            <Badge variant="secondary">Advanced</Badge>
-            <span className="text-slate-500 dark:text-slate-400">•</span>
-            <div className="flex items-center gap-1 text-sm text-slate-500 dark:text-slate-400">
-              <Calendar className="h-4 w-4" />
-              January 10, 2024
-            </div>
-            <span className="text-slate-500 dark:text-slate-400">•</span>
-            <div className="flex items-center gap-1 text-sm text-slate-500 dark:text-slate-400">
-              <Clock className="h-4 w-4" />
-              12 min read
-            </div>
-          </div>
-          
-          <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-            Advanced Prompt Engineering Techniques for Power Users
-          </h1>
-          
-          <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
-            Discover sophisticated prompt engineering strategies used by AI professionals to achieve complex, nuanced outputs.
-          </p>
-        </div>
-
-        {/* Article Content */}
-        <Card className="shadow-lg">
-          <CardContent className="p-8">
-            <div className="whitespace-pre-line text-slate-700 dark:text-slate-300 leading-relaxed">
-{`Advanced Prompt Engineering Techniques for Power Users
+Advanced Prompt Engineering Techniques for Power Users
 
 Once you've mastered the basics of prompt engineering, it's time to explore advanced techniques that can unlock the full potential of AI systems. These sophisticated strategies are used by AI researchers, prompt engineers, and power users to achieve remarkable results across complex tasks.
 
@@ -141,26 +87,4 @@ Mastering these advanced techniques takes time and practice, but the results can
 
 Ready to Level Up?
 
-These advanced techniques represent the cutting edge of prompt engineering. Which technique would you like to try first in your next AI interaction?`}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Share Section */}
-        <div className="mt-8 flex items-center justify-between">
-          <Button variant="outline" className="flex items-center gap-2">
-            <Share2 className="h-4 w-4" />
-            Share Article
-          </Button>
-        </div>
-
-        {/* Next Blog Button */}
-        <NextBlogButton 
-          href="/blog/ai-prompts-productivity-boost" 
-          title="10 AI Prompts That Will Transform Your Daily Productivity" 
-        />
-
-      </div>
-    </div>
-  )
-}
+These advanced techniques represent the cutting edge of prompt engineering. Which technique would you like to try first in your next AI interaction?

@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
+import BackButton from '@/components/back-button'
 import { Mail, Phone, MapPin, Clock, MessageSquare, Send } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 
@@ -45,6 +46,12 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       <div className="container mx-auto px-4 py-16 max-w-6xl">
+        
+        {/* Back Button */}
+        <div className="mb-8">
+          <BackButton href="/" text="← Back to Home" />
+        </div>
+        
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
             Contact Us
@@ -147,7 +154,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-slate-900 dark:text-slate-100">Email Us</h3>
-                    <p className="text-slate-600 dark:text-slate-400">support@superprompts.com</p>
+                    <p className="text-slate-600 dark:text-slate-400">Superprompts30@gmail.com</p>
                     <p className="text-sm text-slate-500 dark:text-slate-500">We respond within 24 hours</p>
                   </div>
                 </div>
@@ -155,29 +162,17 @@ export default function ContactPage() {
                 <Separator />
 
                 <div className="flex items-start gap-4">
-                  <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
-                    <Phone className="h-5 w-5 text-green-600 dark:text-green-400" />
+                  <div className="p-2 bg-pink-100 dark:bg-pink-900 rounded-lg">
+                    <svg className="h-5 w-5 text-pink-600 dark:text-pink-400" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-900 dark:text-slate-100">Call Us</h3>
-                    <p className="text-slate-600 dark:text-slate-400">+1 (555) 123-4567</p>
-                    <p className="text-sm text-slate-500 dark:text-slate-500">Mon-Fri 9AM-6PM PST</p>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div className="flex items-start gap-4">
-                  <div className="p-2 bg-purple-100 dark:bg-purple-900 rounded-lg">
-                    <MapPin className="h-5 w-5 text-purple-600 dark:text-purple-400" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-slate-900 dark:text-slate-100">Visit Us</h3>
+                    <h3 className="font-semibold text-slate-900 dark:text-slate-100">Follow Us</h3>
                     <p className="text-slate-600 dark:text-slate-400">
-                      123 Innovation Drive<br />
-                      Tech City, TC 12345<br />
-                      United States
+                      <a href="https://www.instagram.com/superprompts.in" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">@superprompts.in</a>
                     </p>
+                    <p className="text-sm text-slate-500 dark:text-slate-500">Built by <a href="https://www.instagram.com/reach.ai_/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">@reach.ai_</a></p>
                   </div>
                 </div>
 
@@ -237,55 +232,9 @@ export default function ContactPage() {
               </CardContent>
             </Card>
 
-            {/* Social Media */}
-            <Card className="shadow-lg">
-              <CardHeader>
-                <CardTitle>Connect With Us</CardTitle>
-                <CardDescription>
-                  Follow us for updates, tips, and new prompts.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex gap-4">
-                  <Button variant="outline" className="flex-1">
-                    Twitter
-                  </Button>
-                  <Button variant="outline" className="flex-1">
-                    LinkedIn
-                  </Button>
-                  <Button variant="outline" className="flex-1">
-                    Discord
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>
 
-        {/* Map Section */}
-        <div className="mt-16">
-          <Card className="shadow-lg">
-            <CardHeader>
-              <CardTitle>Find Us</CardTitle>
-              <CardDescription>
-                Visit our office in the heart of Tech City.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="bg-slate-200 dark:bg-slate-700 rounded-lg h-64 flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-                  <p className="text-slate-600 dark:text-slate-400">
-                    Interactive map would be displayed here
-                  </p>
-                  <p className="text-sm text-slate-500 dark:text-slate-500 mt-2">
-                    (Google Maps integration can be added)
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
       </div>
     </div>
   )
