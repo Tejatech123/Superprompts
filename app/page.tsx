@@ -140,16 +140,17 @@ export default function Home() {
             
           </section>
 
+
           {/* Prompt helper header + filters */}
-          <section className="mb-8">
-            <div className="text-center mb-4">
-              <h2 className="text-2xl font-bold text-foreground">Tap an image to copy the prompt</h2>
-              <p className="mt-2 text-sm text-muted-foreground">
+          <section className="mb-6">
+            <div className="text-center mb-3">
+              <h2 className="text-lg font-semibold text-foreground">Tap an image to copy the prompt</h2>
+              <p className="mt-1 text-xs text-muted-foreground">
                 Paste in <span className="text-green-500 font-medium">Gemini</span> or <span className="text-green-500 font-medium">ChatGPT</span> with your photo to create a similar look. Results may vary.
               </p>
     </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-2">
+            <div className="flex flex-wrap items-center justify-center gap-1.5">
               {[
                 "All",
                 "Women",
@@ -169,7 +170,7 @@ export default function Home() {
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
                     className={
-                      `rounded-full px-3 py-1.5 text-xs border transition-colors ` +
+                      `rounded-full px-2 py-1 text-xs border transition-colors ` +
                       (isActive
                         ? `bg-foreground text-background border-transparent`
                         : `bg-transparent text-foreground border-border hover:bg-muted/60`)
@@ -2500,6 +2501,61 @@ export default function Home() {
             </div>
           </section>
           )}
+
+          {/* Explore More Section - End of Page */}
+          <section className="mt-20 mb-16">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-bold text-foreground mb-4">Explore More</h2>
+              <p className="text-muted-foreground">Discover our platform and resources</p>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-5xl mx-auto">
+              <Button asChild variant="outline" className="h-20 flex flex-col gap-2 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-colors">
+                <a href="/about">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span className="text-sm font-medium">About Us</span>
+                </a>
+              </Button>
+              
+              <Button asChild variant="outline" className="h-20 flex flex-col gap-2 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-colors">
+                <a href="/blog">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                  </svg>
+                  <span className="text-sm font-medium">Blog</span>
+                </a>
+              </Button>
+              
+              <Button asChild variant="outline" className="h-20 flex flex-col gap-2 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-colors">
+                <a href="/contact">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  <span className="text-sm font-medium">Contact</span>
+                </a>
+              </Button>
+              
+              <Button asChild variant="outline" className="h-20 flex flex-col gap-2 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-colors">
+                <a href="/privacy-policy">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                  <span className="text-sm font-medium">Privacy</span>
+                </a>
+              </Button>
+              
+              <Button asChild variant="outline" className="h-20 flex flex-col gap-2 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-colors">
+                <a href="/terms-conditions">
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                  </svg>
+                  <span className="text-sm font-medium">Terms</span>
+                </a>
+              </Button>
+            </div>
+          </section>
 
         </div>
       </main>

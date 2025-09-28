@@ -107,15 +107,15 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto">
 
           {/* Prompt helper header + filters */}
-          <section className="mb-8">
-            <div className="text-center mb-4">
-              <h2 className="text-2xl font-bold text-foreground">Tap an image to copy the prompt</h2>
-              <p className="mt-2 text-sm text-muted-foreground">
+          <section className="mb-6">
+            <div className="text-center mb-3">
+              <h2 className="text-lg font-semibold text-foreground">Tap an image to copy the prompt</h2>
+              <p className="mt-1 text-xs text-muted-foreground">
                 Paste in <span className="text-green-500 font-medium">Gemini</span> or <span className="text-green-500 font-medium">ChatGPT</span> with your photo to create a similar look. Results may vary.
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-2">
+            <div className="flex flex-wrap items-center justify-center gap-1.5">
               {[
                 "All",
                 "Women",
@@ -135,7 +135,7 @@ export default function HomePage() {
                     key={cat}
                     onClick={() => setSelectedCategory(cat)}
                     className={
-                      `rounded-full px-3 py-1.5 text-xs border transition-colors ` +
+                      `rounded-full px-2 py-1 text-xs border transition-colors ` +
                       (isActive
                         ? `bg-foreground text-background border-transparent`
                         : `bg-transparent text-foreground border-border hover:bg-muted/60`)
@@ -2466,6 +2466,7 @@ export default function HomePage() {
             </div>
           </section>
           )}
+
 
         </div>
       </main>

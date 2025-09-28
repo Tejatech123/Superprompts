@@ -4,6 +4,7 @@ import { GeistMono } from 'geist/font/mono'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider } from '@/components/theme-provider'
 import { AuthProvider } from '@/contexts/AuthContext'
+import CookiesBanner from '@/components/cookies-banner'
 import '../styles/globals.css'
 import { Toaster } from '@/components/ui/toaster'
 
@@ -29,6 +30,7 @@ export default function RootLayout({
             {children}
             <Analytics />
             <Toaster />
+            <CookiesBanner />
           </AuthProvider>
         </ThemeProvider>
       </body>

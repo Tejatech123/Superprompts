@@ -23,6 +23,22 @@ export function Header() {
           </Link>
         </div>
 
+        {/* Center: Navigation Links */}
+        <nav className="hidden md:flex items-center gap-6">
+          <Link href="/" className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            Home
+          </Link>
+          <Link href="/about" className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            About
+          </Link>
+          <Link href="/blog" className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            Blog
+          </Link>
+          <Link href="/contact" className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            Contact
+          </Link>
+        </nav>
+
         {/* Right: Navigation */}
         <div className="flex items-center gap-3">
           <Link href="/sign-up">
