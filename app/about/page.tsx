@@ -29,7 +29,7 @@ export default function AboutPage() {
         
         {/* Back Button */}
         <div className="mb-8">
-          <BackButton href="/" text="← Back to Home" />
+          <BackButton href="/" text="Back to Home" />
         </div>
         
         {/* Hero Section */}

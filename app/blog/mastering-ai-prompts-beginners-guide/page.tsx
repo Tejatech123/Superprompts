@@ -20,7 +20,7 @@ export default function BlogPostPage() {
         
         {/* Back Button */}
         <div className="mb-8">
-          <BackButton href="/blog" text="← Back to Blog" />
+          <BackButton href="/blog" text="Back to Blog" />
         </div>
 
         {/* Article Header */}

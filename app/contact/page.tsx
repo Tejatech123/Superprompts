@@ -49,7 +49,7 @@ export default function ContactPage() {
         
         {/* Back Button */}
         <div className="mb-8">
-          <BackButton href="/" text="← Back to Home" />
+          <BackButton href="/" text="Back to Home" />
         </div>
         
         <div className="text-center mb-12">

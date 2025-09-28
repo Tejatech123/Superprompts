@@ -48,7 +48,7 @@ export default function BlogPage() {
         
         {/* Back Button */}
         <div className="mb-8">
-          <BackButton href="/" text="← Back to Home" />
+          <BackButton href="/" text="Back to Home" />
         </div>
         
         {/* Header */}
