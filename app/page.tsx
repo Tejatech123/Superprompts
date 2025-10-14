@@ -192,6 +192,7 @@ export default function Home() {
                 "Baby",
                 "Navratri Special",
                 "Couple",
+                "Diwali",
                 "Ads",
               ].map((cat) => {
                 const isActive = selectedCategory === cat
@@ -3017,6 +3018,615 @@ export default function Home() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                       </svg>
                       {copiedKey === "ads-9" ? "Copied!" : "Copy Prompt"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          )}
+
+          {/* Diwali Special Section */}
+          {(selectedCategory === "All" || selectedCategory === "Diwali") && (
+          <section className="mb-16">
+            <div className="text-center mb-8">
+              <div className="inline-block">
+                <h2 className="text-3xl font-bold text-foreground mb-2 relative">
+                  🪔 Diwali Special Prompts ✨
+                  <div className="absolute -top-2 -right-6 text-yellow-400 animate-pulse">✦</div>
+                  <div className="absolute -bottom-1 -left-4 text-orange-400 animate-pulse delay-100">✦</div>
+                </h2>
+                <div className="h-1 bg-gradient-to-r from-orange-400 via-yellow-400 to-orange-400 rounded-full"></div>
+              </div>
+              <p className="mt-4 text-sm text-muted-foreground max-w-2xl mx-auto">
+                Celebrate the Festival of Lights with stunning AI-generated Diwali images. Perfect for festive greetings and social media!
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Diwali Image 1 - Vintage Bollywood Festive Portrait */}
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-orange-200 group">
+                <div className="relative overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm">Diwali</span>
+                  </div>
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwxmYkczh9UxDkIBG1gfyXrmvT7WEZC2uRJ64h"
+                    alt="Vintage Bollywood Festive Portrait"
+                    loading="lazy"
+                    className="w-full aspect-[394/493] object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Vintage Bollywood Festive Portrait</h3>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                    Vintage Bollywood festive portrait — graceful woman in red and gold saree, dupatta elegantly draped, smiling softly with diya and sparkler in hand, surrounded by glowing diyas and fireworks.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => handleShare(
+                        'Vintage Bollywood Festive Portrait - Diwali AI Prompt',
+                        'Create stunning Diwali images with this AI prompt!'
+                      )}
+                      className="text-xs text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                      </svg>
+                      Share
+                    </button>
+                    <button
+                      onClick={() =>
+                        copyPromptLandingStyle(
+                          "Vintage Bollywood festive portrait — graceful woman in red and gold saree, dupatta elegantly draped, smiling softly with diya and sparkler in hand, surrounded by glowing diyas and fireworks.",
+                          "diwali-1"
+                        )
+                      }
+                      className="bg-gradient-to-r from-orange-500 to-yellow-600 hover:from-orange-600 hover:to-yellow-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      {copiedKey === "diwali-1" ? "Copied!" : "Copy Prompt"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Diwali Image 2 - Rooftop Diya Lighting */}
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-orange-200 group">
+                <div className="relative overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm">Diwali</span>
+                  </div>
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwp6midieNu726RMeTXDadHG1zIB3tvw84Ynxh"
+                    alt="Rooftop Diya Lighting"
+                    loading="lazy"
+                    className="w-full aspect-[394/493] object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Rooftop Diya Lighting</h3>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                    Cinematic, ultra-hyper-realistic 4K full-body portrait of a young Girl with the same facial features as the provided reference image, Keep her exact same face and expression with 100% accuracy. standing atop a rooftop at the transition from day to night. She is posing fashionably while sporting a lovely smile and wearing a golden and silver lehenga. She is illuminating rooftop diyas. The background features a creamy and gentle bokeh effect of light lamps and flare lights, rich in dramatic and cinematic elements.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => handleShare(
+                        'Rooftop Diya Lighting - Diwali AI Prompt',
+                        'Create stunning Diwali images with this AI prompt!'
+                      )}
+                      className="text-xs text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                      </svg>
+                      Share
+                    </button>
+                    <button
+                      onClick={() =>
+                        copyPromptLandingStyle(
+                          "Cinematic, ultra-hyper-realistic 4K full-body portrait of a young Girl with the same facial features as the provided reference image, Keep her exact same face and expression with 100% accuracy. standing atop a rooftop at the transition from day to night. She is posing fashionably while sporting a lovely smile and wearing a golden and silver lehenga. She is illuminating rooftop diyas. The background features a creamy and gentle bokeh effect of light lamps and flare lights, rich in dramatic and cinematic elements.",
+                          "diwali-2"
+                        )
+                      }
+                      className="bg-gradient-to-r from-orange-500 to-yellow-600 hover:from-orange-600 hover:to-yellow-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      {copiedKey === "diwali-2" ? "Copied!" : "Copy Prompt"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Diwali Image 3 - Purple Saree Celebration */}
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-orange-200 group">
+                <div className="relative overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm">Diwali</span>
+                  </div>
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwZFA7h8DjHWxIy2TDUNvSzZfpOEbKc1QAJmt6"
+                    alt="Purple Saree Celebration"
+                    loading="lazy"
+                    className="w-full aspect-[394/493] object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Purple Saree Celebration</h3>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                    Create a high-quality 4K cinematic portrait of a traditional Indian woman celebrating Diwali. She is not a married woman, so do not use sindoor or mangalsutra on her. She is wearing a beautiful purple saree with subtle golden shimmer lines and soft natural light reflections on the fabric to enhance its realistic texture. She is adorned with traditional gold jewelry — including dangling earrings, elegant bangles, and a small bindi on her forehead. The woman is sitting gracefully in a festive Diwali setup with a deep red draped background decorated with yellow marigold garlands and a basket of flowers on one side. She is holding a single decorated clay diya (oil lamp) with only one burning flame, positioned close to the camera to create a glowing foreground effect.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => handleShare(
+                        'Purple Saree Celebration - Diwali AI Prompt',
+                        'Create stunning Diwali images with this AI prompt!'
+                      )}
+                      className="text-xs text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                      </svg>
+                      Share
+                    </button>
+                    <button
+                      onClick={() =>
+                        copyPromptLandingStyle(
+                          "Create a high-quality 4K cinematic portrait of a traditional Indian woman celebrating Diwali. She is not a married woman, so do not use sindoor or mangalsutra on her. She is wearing a beautiful purple saree with subtle golden shimmer lines and soft natural light reflections on the fabric to enhance its realistic texture. She is adorned with traditional gold jewelry — including dangling earrings, elegant bangles, and a small bindi on her forehead. The woman is sitting gracefully in a festive Diwali setup with a deep red draped background decorated with yellow marigold garlands and a basket of flowers on one side. She is holding a single decorated clay diya (oil lamp) with only one burning flame, positioned close to the camera to create a glowing foreground effect. The background should have a warm blur bokeh lighting effect, adding a soft, glowing, festive mood. The lighting should be warm and soft, casting natural highlights on her face, jewelry, and saree, while maintaining a cinematic depth and festive atmosphere. Her expression should be gentle, confident, and welcoming, with a soft smile and warm eyes. Use 4K ultra-realistic lighting, natural skin texture, shallow depth of field, warm bokeh in the background, and cinematic tones to enhance the visual quality. The overall mood should represent Diwali celebration warmth and elegance. For facial expression use uploaded image for facial expression",
+                          "diwali-3"
+                        )
+                      }
+                      className="bg-gradient-to-r from-orange-500 to-yellow-600 hover:from-orange-600 hover:to-yellow-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      {copiedKey === "diwali-3" ? "Copied!" : "Copy Prompt"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Diwali Image 4 - Blue Saree Fireworks */}
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-orange-200 group">
+                <div className="relative overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm">Diwali</span>
+                  </div>
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw6Hnw77R53SnutNYHFlcKhsWkDoeapCyiRLgf"
+                    alt="Blue Saree Fireworks"
+                    loading="lazy"
+                    className="w-full aspect-[394/493] object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Blue Saree Fireworks</h3>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                    Ultra realistic 4K cinematic portrait of the same young woman, wearing a royal blue silk saree with silver borders and traditional jewelry — jhumkas, bangles, and a bindi. She is lighting a diya placed on the terrace wall, her face glowing from the warm light. The background shows fireworks in the sky and fairy lights around. Metallic glowing text in background says Happy Diwali.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => handleShare(
+                        'Blue Saree Fireworks - Diwali AI Prompt',
+                        'Create stunning Diwali images with this AI prompt!'
+                      )}
+                      className="text-xs text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                      </svg>
+                      Share
+                    </button>
+                    <button
+                      onClick={() =>
+                        copyPromptLandingStyle(
+                          "Ultra realistic 4K cinematic portrait of the same young woman, wearing a royal blue silk saree with silver borders and traditional jewelry — jhumkas, bangles, and a bindi. She is lighting a diya placed on the terrace wall, her face glowing from the warm light. The background shows fireworks in the sky and fairy lights around. Metallic glowing text in background says Happy Diwali.",
+                          "diwali-4"
+                        )
+                      }
+                      className="bg-gradient-to-r from-orange-500 to-yellow-600 hover:from-orange-600 hover:to-yellow-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      {copiedKey === "diwali-4" ? "Copied!" : "Copy Prompt"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Diwali Image 5 - Fairy Lights Lehenga */}
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-orange-200 group">
+                <div className="relative overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm">Diwali</span>
+                  </div>
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw9wViidZ7EfX8npDc3ogZOmLu4UtJayY2dqwK"
+                    alt="Fairy Lights Lehenga"
+                    loading="lazy"
+                    className="w-full aspect-[394/493] object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Fairy Lights Lehenga</h3>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                    Beautiful young woman with black and brown hair is standing outdoors at night, holding onto decorative tree branches wrapped with glowing fairy lights. She is wearing a festive Diwali outfit — a stylish lehenga with a shimmering blouse and a matching dupatta draped gracefully. Her look is accessorized with layered rings, earrings, and elegant bangles, and subtle henna designs are visible on her hand. She poses casually with both arms resting on the branches, leaning slightly forward, giving a friendly, confident expression. The face from the original image must be maintained.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => handleShare(
+                        'Fairy Lights Lehenga - Diwali AI Prompt',
+                        'Create stunning Diwali images with this AI prompt!'
+                      )}
+                      className="text-xs text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                      </svg>
+                      Share
+                    </button>
+                    <button
+                      onClick={() =>
+                        copyPromptLandingStyle(
+                          "Beautiful young woman with black and brown hair is standing outdoors at night, holding onto decorative tree branches wrapped with glowing fairy lights. She is wearing a festive Diwali outfit — a stylish lehenga with a shimmering blouse and a matching dupatta draped gracefully. Her look is accessorized with layered rings, earrings, and elegant bangles, and subtle henna designs are visible on her hand. She poses casually with both arms resting on the branches, leaning slightly forward, giving a friendly, confident expression. The face from the original image must be maintained.",
+                          "diwali-5"
+                        )
+                      }
+                      className="bg-gradient-to-r from-orange-500 to-yellow-600 hover:from-orange-600 hover:to-yellow-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      {copiedKey === "diwali-5" ? "Copied!" : "Copy Prompt"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Diwali Image 6 - Sparkler Dance */}
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-orange-200 group">
+                <div className="relative overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm">Diwali</span>
+                  </div>
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwap9eVwQiRDNb3IhfgrKEmuyxs7vH80dATFPY"
+                    alt="Sparkler Dance"
+                    loading="lazy"
+                    className="w-full aspect-[394/493] object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Sparkler Dance</h3>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                    A cinematic, ultra-hyper-realistic 4K portrait of a young Girl with the same facial features as the provided reference image, Keep her exact same face and expression with 100% accuracy at Diwali night, dressed in a purple and silver ghagra choli with intricate mirror work and a bright dupatta. She is dancing joyfully with sparklers in both hands, her jewelry sparkling in the light. Terrace decorated with rangoli, diyas, and lanterns. Metallic golden text in background says Happy Diwali.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => handleShare(
+                        'Sparkler Dance - Diwali AI Prompt',
+                        'Create stunning Diwali images with this AI prompt!'
+                      )}
+                      className="text-xs text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                      </svg>
+                      Share
+                    </button>
+                    <button
+                      onClick={() =>
+                        copyPromptLandingStyle(
+                          "A cinematic, ultra-hyper-realistic 4K portrait of a young Girl with the same facial features as the provided reference image, Keep her exact same face and expression with 100% accuracy at Diwali night, dressed in a purple and silver ghagra choli with intricate mirror work and a bright dupatta. She is dancing joyfully with sparklers in both hands, her jewelry sparkling in the light. Terrace decorated with rangoli, diyas, and lanterns. Metallic golden text in background says Happy Diwali.",
+                          "diwali-6"
+                        )
+                      }
+                      className="bg-gradient-to-r from-orange-500 to-yellow-600 hover:from-orange-600 hover:to-yellow-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      {copiedKey === "diwali-6" ? "Copied!" : "Copy Prompt"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Diwali Image 7 - Pink Anarkali with Diyas */}
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-orange-200 group">
+                <div className="relative overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm">Diwali</span>
+                  </div>
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwZmSiHcDjHWxIy2TDUNvSzZfpOEbKc1QAJmt6"
+                    alt="Pink Anarkali with Diyas"
+                    loading="lazy"
+                    className="w-full aspect-[394/493] object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Pink Anarkali with Diyas</h3>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                    Ultra realistic 4K cinematic portrait of the same young woman, wearing a pastel pink Anarkali suit with delicate golden embroidery and flowing dupatta. She is holding a plate full of lit diyas in both hands, looking down gracefully. The terrace wall glows with rows of diyas, and colorful fireworks burst in the sky.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => handleShare(
+                        'Pink Anarkali with Diyas - Diwali AI Prompt',
+                        'Create stunning Diwali images with this AI prompt!'
+                      )}
+                      className="text-xs text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                      </svg>
+                      Share
+                    </button>
+                    <button
+                      onClick={() =>
+                        copyPromptLandingStyle(
+                          "Ultra realistic 4K cinematic portrait of the same young woman, wearing a pastel pink Anarkali suit with delicate golden embroidery and flowing dupatta. She is holding a plate full of lit diyas in both hands, looking down gracefully. The terrace wall glows with rows of diyas, and colorful fireworks burst in the sky.",
+                          "diwali-7"
+                        )
+                      }
+                      className="bg-gradient-to-r from-orange-500 to-yellow-600 hover:from-orange-600 hover:to-yellow-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      {copiedKey === "diwali-7" ? "Copied!" : "Copy Prompt"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Diwali Image 8 - Man in Maroon Kurta */}
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-orange-200 group">
+                <div className="relative overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm">Diwali</span>
+                  </div>
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwOshuUG91UNau7cYf2wMep30kjvxyXARgPFrB"
+                    alt="Man in Maroon Kurta"
+                    loading="lazy"
+                    className="w-full aspect-[394/493] object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Traditional Festive Setup</h3>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                    Generate an ultra-realistic 4K DSLR-quality festive portrait photo of a man standing in a traditional Indian festive setup. The man should be wearing a rich maroon-red silk kurta with subtle golden embroidered patterns. The background should have a warm orange-red festive tone with gold hanging floral garlands and traditional diyas suspended elegantly, softly glowing to create a festive atmosphere. Add a soft, warm light setup highlighting the face and outfit — the lighting should create a cinematic Diwali feel with gentle shadows and glow. The background should also include a blurred "Happy Diwali" text in warm neon light.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => handleShare(
+                        'Traditional Festive Setup - Diwali AI Prompt',
+                        'Create stunning Diwali images with this AI prompt!'
+                      )}
+                      className="text-xs text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                      </svg>
+                      Share
+                    </button>
+                    <button
+                      onClick={() =>
+                        copyPromptLandingStyle(
+                          "Generate an ultra-realistic 4K DSLR-quality festive portrait photo of a man standing in a traditional Indian festive setup, inspired by the reference image. The man should be wearing a rich maroon-red silk kurta with subtle golden embroidered patterns, just like in the reference. His pose, body posture, and hand position should exactly match the reference image — natural, cheerful, and festive. The background should have a warm orange-red festive tone with gold hanging floral garlands and traditional diyas (lamps) suspended elegantly, softly glowing to create a festive atmosphere. On the side, there should be a decorative plate filled with rose petals and lit diyas, placed on a small stand, matching the aesthetic of the reference. Add a soft, warm light setup highlighting the face and outfit — the lighting should create a cinematic Diwali feel with gentle shadows and glow. The background should also include a blurred 'Happy Diwali' text in warm neon light, subtly visible to add depth and celebration mood without overpowering the subject. Make sure the facial structure, hairstyle, and expression exactly match the uploaded reference image. Add a natural smile on the face to maintain a pleasant and festive expression. For facial expression use uploaded image for facial expression",
+                          "diwali-8"
+                        )
+                      }
+                      className="bg-gradient-to-r from-orange-500 to-yellow-600 hover:from-orange-600 hover:to-yellow-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      {copiedKey === "diwali-8" ? "Copied!" : "Copy Prompt"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Diwali Image 9 - Man with Fairy Lights */}
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-orange-200 group">
+                <div className="relative overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm">Diwali</span>
+                  </div>
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwHg6uhWvcTbexiRGQSaVPyjDLoh0Nw7C31uA2"
+                    alt="Man with Fairy Lights"
+                    loading="lazy"
+                    className="w-full aspect-[394/493] object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Fairy Lights Portrait</h3>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                    Ultra-realistic 8K DSLR festive portrait of the same young man (face must remain 100% identical to the reference without changes). He is dressed in a rich deep maroon kurta with subtle embroidered texture, wearing a round black smartwatch. Shot waist-up, one hand rests lightly on glowing fairy lights while the other stays relaxed by his side. He gives a wide confident smile, looking directly at the camera. The background is filled with soft glowing diyas, blurred fairy lights, and warm Diwali bokeh for a rich festive ambiance. Cinematic low-angle framing, natural skin tones, sharp realistic textures, professional 8K DSLR clarity.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => handleShare(
+                        'Fairy Lights Portrait - Diwali AI Prompt',
+                        'Create stunning Diwali images with this AI prompt!'
+                      )}
+                      className="text-xs text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                      </svg>
+                      Share
+                    </button>
+                    <button
+                      onClick={() =>
+                        copyPromptLandingStyle(
+                          "Ultra-realistic 8K DSLR festive portrait of the same young man (face must remain 100% identical to the reference without changes). He is dressed in a rich deep maroon kurta with subtle embroidered texture, wearing a round black smartwatch. Shot waist-up, one hand rests lightly on glowing fairy lights while the other stays relaxed by his side. He gives a wide confident smile, looking directly at the camera. The background is filled with soft glowing diyas (lamps), blurred fairy lights, and warm Diwali bokeh for a rich festive ambiance. Cinematic low-angle framing, natural skin tones, sharp realistic textures, professional 8K DSLR clarity. Make sure the face remains the same and 100% preserve for facial expression use uploaded image for facial expression",
+                          "diwali-9"
+                        )
+                      }
+                      className="bg-gradient-to-r from-orange-500 to-yellow-600 hover:from-orange-600 hover:to-yellow-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      {copiedKey === "diwali-9" ? "Copied!" : "Copy Prompt"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Diwali Image 10 - Moody Fairy Lights */}
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-orange-200 group">
+                <div className="relative overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm">Diwali</span>
+                  </div>
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwLwHQvUObUuOwQ3JFylTsXkfHctSMIBCxvrDj"
+                    alt="Moody Fairy Lights"
+                    loading="lazy"
+                    className="w-full aspect-[394/493] object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Artistic Low-Light Portrait</h3>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                    Cinematic portrait of a young man sitting in a dimly lit room, holding a warm yellow fairy light string close to his face. The light softly illuminates his face and hand, creating a moody and artistic low-light aesthetic. The subject is wearing a dark maroon shirt with small printed patterns. The background is dark and blurred to emphasize the glowing lights and the subject's expression. The composition should show the fairy lights wrapped around his hand and slightly leading toward the camera in a beautiful bokeh effect. The lighting should highlight the contours of the face and the reflections in the eyes for a dramatic look.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => handleShare(
+                        'Artistic Low-Light Portrait - Diwali AI Prompt',
+                        'Create stunning Diwali images with this AI prompt!'
+                      )}
+                      className="text-xs text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                      </svg>
+                      Share
+                    </button>
+                    <button
+                      onClick={() =>
+                        copyPromptLandingStyle(
+                          "Cinematic portrait of a young man sitting in a dimly lit room, holding a warm yellow fairy light string close to his face. The light softly illuminates his face and hand, creating a moody and artistic low-light aesthetic. The subject is wearing a dark maroon shirt with small printed patterns. The background is dark and blurred to emphasize the glowing lights and the subject's expression. The composition should show the fairy lights wrapped around his hand and slightly leading toward the camera in a beautiful bokeh effect. The lighting should highlight the contours of the face and the reflections in the eyes for a dramatic look. The model's pose must be exactly the same as in the reference image — sitting posture, right hand near face, fairy lights wrapped around hand and glowing warmly. The facial expression must match the uploaded reference image precisely. Use the uploaded image for facial expression and facial structure. Generate in ultra-realistic, 4K, cinematic portrait style with soft shadows, warm tones, and smooth background blur (bokeh)",
+                          "diwali-10"
+                        )
+                      }
+                      className="bg-gradient-to-r from-orange-500 to-yellow-600 hover:from-orange-600 hover:to-yellow-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      {copiedKey === "diwali-10" ? "Copied!" : "Copy Prompt"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Diwali Image 11 - Terrace Sparkler */}
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-orange-200 group">
+                <div className="relative overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm">Diwali</span>
+                  </div>
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw4LRYffaYFX86A5gi7HbrqUwvNzJdpP9B4RST"
+                    alt="Terrace Sparkler"
+                    loading="lazy"
+                    className="w-full aspect-[394/493] object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Mumbai Terrace Celebration</h3>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                    Ultra realistic 4K cinematic portrait of the same young man, face exactly like the reference photo. He is standing on a terrace at Diwali night, wearing a white kurta. One hand holds a lit phooljhadi and he looks at it happily, the other hand in pajama pocket. Background shows night sky with fireworks and a terrace wall decorated with glowing diyas. Natural, festive, and highly realistic. And add a metallic text in background Happy diwali. A young man in traditional Indian attire, holding a sparkler, celebrating Diwali on a balcony overlooking the Mumbai skyline at night, with fireworks illuminating the sky.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => handleShare(
+                        'Mumbai Terrace Celebration - Diwali AI Prompt',
+                        'Create stunning Diwali images with this AI prompt!'
+                      )}
+                      className="text-xs text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                      </svg>
+                      Share
+                    </button>
+                    <button
+                      onClick={() =>
+                        copyPromptLandingStyle(
+                          "Ultra realistic 4K cinematic portrait of the same young man, face exactly like the reference photo. He is standing on a terrace at Diwali night, wearing a white kurta. One hand holds a lit phooljhadi and he looks at it happily, the other hand in pajama pocket. Background shows night sky with fireworks and a terrace wall decorated with glowing diyas. Natural, festive, and highly realistic. And add a metallic text in background Happy diwali. A young man in traditional Indian attire, holding a sparkler, celebrating Diwali on a balcony overlooking the Mumbai skyline at night, with fireworks illuminating the sky and decorative lanterns hanging around him. The city lights of Mumbai are visible in the background.",
+                          "diwali-11"
+                        )
+                      }
+                      className="bg-gradient-to-r from-orange-500 to-yellow-600 hover:from-orange-600 hover:to-yellow-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      {copiedKey === "diwali-11" ? "Copied!" : "Copy Prompt"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Diwali Image 12 - Ravan Background */}
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-orange-200 group">
+                <div className="relative overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm">Diwali</span>
+                  </div>
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwqkze0JNU4BmMWfYHFOxGdgRar1D06t8NZlQj"
+                    alt="Ravan Background"
+                    loading="lazy"
+                    className="w-full aspect-[394/493] object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Dramatic Ravan Background</h3>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                    Full-length, low-angle cinematic shot of a man looks exactly 100% same as the man in the uploaded image, face, hair, body every detail is same as the uploaded image. serious expression, walking straight toward the camera. He's wearing a Black Suit and dark shadow, a black pant, with open Hands, walking in style wearing black glasses. His right wrist shows a classic round-dial watch, with intense expression. The background is a dramatic, ravana with 9 face statue is burning, smoky scene bathed in an intense warm orange backlight, filled with drifting ember. Generate 8K Ultra hyperealistic image.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => handleShare(
+                        'Dramatic Ravan Background - Diwali AI Prompt',
+                        'Create stunning Diwali images with this AI prompt!'
+                      )}
+                      className="text-xs text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                      </svg>
+                      Share
+                    </button>
+                    <button
+                      onClick={() =>
+                        copyPromptLandingStyle(
+                          "Full-length, low-angle cinematic shot of a man looks exactly 100% same as the man in the uploaded image, face, hair, body every detail is same as the uploaded image. serious expression, walking straight toward the camera. He's wearing a Black Suit and dark shadow, a black pant, with open Hands, walking in style wearing black glasses. His right wrist shows a classic round-dial watch, with intense expression. The background is a dramatic, ravana with 9 face statue is burning, smoky scene bathed in an intense warm orange backlight, filled with drifting ember. Generate 8K Ultra hyperealistic image.",
+                          "diwali-12"
+                        )
+                      }
+                      className="bg-gradient-to-r from-orange-500 to-yellow-600 hover:from-orange-600 hover:to-yellow-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      {copiedKey === "diwali-12" ? "Copied!" : "Copy Prompt"}
                     </button>
                   </div>
                 </div>
