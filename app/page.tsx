@@ -7,9 +7,10 @@ import { AuthHeader } from "@/components/auth-header";
 
 export default function Home() {
   const { toast } = useToast();
-  const [copiedKey, setCopiedKey] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+    const [copiedKey, setCopiedKey] = useState<string | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<string>("All");
+    const [selectedDiwaliFilter, setSelectedDiwaliFilter] = useState<string>("Women");
+    const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const copyPromptLandingStyle = async (prompt: string, key: string) => {
     const markCopied = () => {
@@ -3031,20 +3032,52 @@ export default function Home() {
           <section className="mb-16">
             <div className="text-center mb-8">
               <div className="inline-block">
-                <h2 className="text-3xl font-bold text-foreground mb-2 relative">
+                <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2 relative">
                   🪔 Diwali Special Prompts ✨
                   <div className="absolute -top-2 -right-6 text-yellow-400 animate-pulse">✦</div>
                   <div className="absolute -bottom-1 -left-4 text-orange-400 animate-pulse delay-100">✦</div>
                 </h2>
                 <div className="h-1 bg-gradient-to-r from-orange-400 via-yellow-400 to-orange-400 rounded-full"></div>
               </div>
-              <p className="mt-4 text-sm text-muted-foreground max-w-2xl mx-auto">
-                Celebrate the Festival of Lights with stunning AI-generated Diwali images. Perfect for festive greetings and social media!
-              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Diwali Image 1 - Vintage Bollywood Festive Portrait */}
+            {/* Diwali Filter Buttons */}
+            <div className="flex justify-center gap-2 md:gap-4 mb-8">
+              <button
+                onClick={() => setSelectedDiwaliFilter("Women")}
+                className={`px-4 py-2 md:px-6 md:py-3 rounded-full text-xs md:text-sm font-semibold transition-all duration-200 flex items-center gap-1 md:gap-2 ${
+                  selectedDiwaliFilter === "Women"
+                    ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg transform scale-105"
+                    : "bg-white text-gray-600 hover:bg-gray-50 border border-gray-200 hover:border-pink-300"
+                }`}
+              >
+                👸 Women
+              </button>
+              <button
+                onClick={() => setSelectedDiwaliFilter("Men")}
+                className={`px-4 py-2 md:px-6 md:py-3 rounded-full text-xs md:text-sm font-semibold transition-all duration-200 flex items-center gap-1 md:gap-2 ${
+                  selectedDiwaliFilter === "Men"
+                    ? "bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg transform scale-105"
+                    : "bg-white text-gray-600 hover:bg-gray-50 border border-gray-200 hover:border-blue-300"
+                }`}
+              >
+                🤵 Men
+              </button>
+            </div>
+
+            {/* Women Subsection */}
+            {selectedDiwaliFilter === "Women" && (
+            <div className="mb-12">
+              <div className="text-center mb-8">
+                <h3 className="text-lg md:text-xl font-bold text-foreground mb-2 relative">
+                  👸 Women's Diwali Collection
+                  <div className="absolute -top-1 -right-4 text-pink-400 animate-pulse">✨</div>
+                </h3>
+                <div className="h-0.5 bg-gradient-to-r from-pink-400 via-purple-400 to-pink-400 rounded-full w-48 mx-auto"></div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Diwali Image 1 - Vintage Bollywood Festive Portrait */}
               <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-orange-200 group">
                 <div className="relative overflow-hidden">
                   <div className="absolute top-4 left-4 z-10">
@@ -3386,8 +3419,23 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+              </div>
+            </div>
+            )}
 
-              {/* Diwali Image 8 - Man in Maroon Kurta */}
+            {/* Men Subsection */}
+            {selectedDiwaliFilter === "Men" && (
+            <div className="mb-12">
+              <div className="text-center mb-8">
+                <h3 className="text-lg md:text-xl font-bold text-foreground mb-2 relative">
+                  🤵 Men's Diwali Collection
+                  <div className="absolute -top-1 -right-4 text-blue-400 animate-pulse">✨</div>
+                </h3>
+                <div className="h-0.5 bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-400 rounded-full w-48 mx-auto"></div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Diwali Image 8 - Man in Maroon Kurta */}
               <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-orange-200 group">
                 <div className="relative overflow-hidden">
                   <div className="absolute top-4 left-4 z-10">
@@ -3631,7 +3679,9 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+              </div>
             </div>
+            )}
           </section>
           )}
 
