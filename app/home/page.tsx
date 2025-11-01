@@ -1,16 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { AuthHeader } from "@/components/auth-header";
-import { useAuth } from "@/contexts/AuthContext";
 
 export default function HomePage() {
-  const router = useRouter();
   const { toast } = useToast();
-  const { user, loading } = useAuth();
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -50,27 +46,6 @@ export default function HomePage() {
     }
   }
 
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push("/sign-in");
-    }
-  }, [user, loading, router]);
-
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return null; // Will redirect to sign-in
-  }
 
   return (
     <div className="min-h-screen bg-background">

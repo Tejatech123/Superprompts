@@ -17,9 +17,6 @@ export function AuthHeader() {
     setTheme(isDark ? "light" : "dark")
   }
 
-  const handleSignUp = () => {
-    router.push("/sign-up")
-  }
 
   const handleSignOut = async () => {
     await signOut()
@@ -52,13 +49,9 @@ export function AuthHeader() {
             )}
             <span className="sr-only">Toggle theme</span>
           </Button>
-          {user ? (
+          {user && (
             <Button onClick={handleSignOut} variant="ghost" className="h-8 px-2 text-foreground">
               Sign out
-            </Button>
-          ) : (
-            <Button onClick={handleSignUp} variant="ghost" className="h-8 px-2 text-foreground">
-              Sign up
             </Button>
           )}
         </div>

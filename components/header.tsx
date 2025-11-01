@@ -46,14 +46,6 @@ export function Header() {
 
         {/* Right: Navigation */}
         <div className="flex items-center gap-3">
-          <Link href="/sign-up">
-            <Button 
-              variant="outline" 
-              className="h-9 px-4 bg-gray-100 dark:bg-gray-800 text-black dark:text-white border-gray-200 dark:border-gray-700 hover:bg-blue-500 hover:text-white hover:border-blue-500 dark:hover:bg-blue-500 dark:hover:text-white dark:hover:border-blue-500 rounded-lg transition-colors"
-            >
-              Sign up
-            </Button>
-          </Link>
           <Button 
             variant="ghost" 
             size="icon" 

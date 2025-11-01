@@ -9,7 +9,7 @@ import '../styles/globals.css'
 import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
-  title: 'Superprompts',
+  title: 'SuperPrompts - the ultimate prompt library for stunning AI images 🖼️✨',
   description: 'Superprompts',
   generator: 'Superprompts',
   icons: {
