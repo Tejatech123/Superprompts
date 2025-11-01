@@ -24,8 +24,13 @@ export function HomeHeader() {
       <div className="container flex h-16 max-w-screen-xl items-center justify-between px-4">
         {/* Left: Brand */}
         <div className="flex items-center">
-          <Link href="/home" className="text-2xl font-bold tracking-tight text-foreground transition-colors hover:text-accent">
-            SuperPrompts
+          <Link href="/home" className="flex items-center gap-2 transition-colors hover:text-accent">
+            <img 
+              src="/WhatsApp Image 2025-10-16 at 6.12.44 PM.jpeg" 
+              alt="SuperPrompts Logo" 
+              className="h-8 w-8 object-contain"
+            />
+            <span className="text-2xl font-bold tracking-tight text-foreground">SuperPrompts</span>
           </Link>
         </div>
 

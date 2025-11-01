@@ -28,9 +28,14 @@ export function AuthHeader() {
   return (
     <header className="sticky top-0 z-50 w-full bg-background">
       <div className="mx-auto flex h-14 max-w-screen-2xl items-center justify-between px-4">
-        {/* Left: simple black text logo */}
-        <Link href={user ? "/home" : "/"} className="text-base sm:text-lg font-semibold tracking-tight text-foreground">
-          superprompts.in
+        {/* Left: logo with WhatsApp image */}
+        <Link href={user ? "/home" : "/"} className="flex items-center gap-2">
+          <img 
+            src="/WhatsApp Image 2025-10-16 at 6.12.44 PM.jpeg" 
+            alt="SuperPrompts Logo" 
+            className="h-8 w-8 object-contain"
+          />
+          <span className="text-base sm:text-lg font-semibold tracking-tight text-foreground">superprompts.in</span>
         </Link>
 
         {/* Right: icons - theme toggle and sign up */}

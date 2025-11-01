@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description: 'Superprompts',
   generator: 'Superprompts',
   icons: {
-    icon: '/icon (11).png',
+    icon: '/WhatsApp Image 2025-10-16 at 6.12.44 PM.jpeg',
   },
 }
 

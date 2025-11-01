@@ -18,8 +18,13 @@ export function Header() {
       <div className="container flex h-16 max-w-screen-xl items-center justify-between px-4 mx-auto">
         {/* Left: Brand */}
         <div className="flex items-center">
-          <Link href="/" className="text-2xl font-bold text-black dark:text-white transition-colors hover:text-gray-700 dark:hover:text-gray-300">
-            SuperPrompts
+          <Link href="/" className="flex items-center gap-2 transition-colors hover:text-gray-700 dark:hover:text-gray-300">
+            <img 
+              src="/WhatsApp Image 2025-10-16 at 6.12.44 PM.jpeg" 
+              alt="SuperPrompts Logo" 
+              className="h-8 w-8 object-contain"
+            />
+            <span className="text-2xl font-bold text-black dark:text-white">SuperPrompts</span>
           </Link>
         </div>
 
