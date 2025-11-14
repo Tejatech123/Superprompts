@@ -3705,6 +3705,9 @@ export default function Home() {
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-4">LINKS</h3>
                   <div className="space-y-2">
+                    <a href="/veo-3-prompts" className="block text-muted-foreground hover:text-foreground transition-colors">
+                      Veo 3 Prompts
+                    </a>
                     <a href="/about" className="block text-muted-foreground hover:text-foreground transition-colors">
                       About Us
                     </a>
@@ -3747,6 +3750,9 @@ export default function Home() {
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-4 text-center">LINKS</h3>
                   <div className="space-y-2 text-center">
+                    <a href="/veo-3-prompts" className="block text-muted-foreground hover:text-foreground transition-colors">
+                      Veo 3 Prompts
+                    </a>
                     <a href="/about" className="block text-muted-foreground hover:text-foreground transition-colors">
                       About Us
                     </a>
