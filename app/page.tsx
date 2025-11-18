@@ -151,8 +151,8 @@ export default function Home() {
                   "https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw70ErklgrCexzG3sdp8WYDicNkoUbPOmTa0nI",
                   // 2nd: Baby Girl 1st image
                   "https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwwAXWqTkNi0m4VxOsT8326pgFSDWGbXqnh5Bf",
-                  // 3rd: Baby Boy 4th image
-                  "https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwLAoxGoObUuOwQ3JFylTsXkfHctSMIBCxvrDj",
+                  // 3rd: Winter - Cinematic Winter Snowfall
+                  "https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw7FHsDlgrCexzG3sdp8WYDicNkoUbPOmTa0nI",
                   // 4th: Navratri Special 4th image
                   "https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwLiWVa7ObUuOwQ3JFylTsXkfHctSMIBCxvrDj",
                   // 5th: Men 3rd image
@@ -194,6 +194,7 @@ export default function Home() {
                 "Navratri Special",
                 "Couple",
                 "Diwali",
+                "Winter",
                 "Ads",
               ].map((cat) => {
                 const isActive = selectedCategory === cat
@@ -3682,6 +3683,224 @@ export default function Home() {
               </div>
             </div>
             )}
+          </section>
+          )}
+
+          {/* Winter Special Section */}
+          {(selectedCategory === "All" || selectedCategory === "Winter") && (
+          <section className="mb-16">
+            <div className="text-center mb-8">
+              <div className="inline-block">
+                <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2 relative">
+                  ❄️ Winter Special Prompts ⛄
+                  <div className="absolute -top-2 -right-6 text-blue-400 animate-pulse">✦</div>
+                  <div className="absolute -bottom-1 -left-4 text-cyan-400 animate-pulse delay-100">✦</div>
+                </h2>
+                <div className="h-1 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 rounded-full"></div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Winter Image 1 - Snowy Mountain Landscape */}
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-200 group">
+                <div className="relative overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm">Winter</span>
+                  </div>
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw7bFUR0grCexzG3sdp8WYDicNkoUbPOmTa0nI"
+                    alt="Snowy Mountain Landscape"
+                    loading="lazy"
+                    className="w-full aspect-[394/493] object-cover group-hover:scale-105 transition-transform duration-300 cursor-pointer"
+                    onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw7bFUR0grCexzG3sdp8WYDicNkoUbPOmTa0nI")}
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Snowy Mountain Landscape</h3>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                    Ultra-realistic use my face as a male model cinematic winter portrait collage arranged in three horizontal panels stacked vertically, featuring the same man in a snowy mountain landscape at twilight. The top panel shows an upper-body back view of the man standing in an open snowy area, facing distant mountains under a deep blue evening sky. He wears a black winter coat covered in snowflakes, and his dark hair is visible, slightly tousled by the cold wind and dusted with snow.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => handleShare(
+                        'Snowy Mountain Landscape - Winter AI Prompt',
+                        'Create stunning Winter images with this AI prompt!'
+                      )}
+                      className="text-xs text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                      </svg>
+                      Share
+                    </button>
+                    <button
+                      onClick={() =>
+                        copyPromptLandingStyle(
+                          "Ultra-realistic use my face as a male model cinematic winter portrait collage arranged in three horizontal panels stacked vertically, featuring the same man in a snowy mountain landscape at twilight. The top panel shows an upper-body back view of the man standing in an open snowy area, facing distant mountains under a deep blue evening sky. He wears a black winter coat covered in snowflakes, and his dark hair is visible, slightly tousled by the cold wind and dusted with snow.",
+                          "winter-1"
+                        )
+                      }
+                      className="bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      {copiedKey === "winter-1" ? "Copied!" : "Copy Prompt"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Winter Image 2 - Snow Angel */}
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-200 group">
+                <div className="relative overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm">Winter</span>
+                  </div>
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw8JHEAc4ItMKwFVUYDbLaHvXOZicJ5BW2ejC6"
+                    alt="Snow Angel"
+                    loading="lazy"
+                    className="w-full aspect-[394/493] object-cover group-hover:scale-105 transition-transform duration-300 cursor-pointer"
+                    onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw8JHEAc4ItMKwFVUYDbLaHvXOZicJ5BW2ejC6")}
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Snow Angel</h3>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                    A person lying on fresh snow making a snow angel with arms and legs spread out. Use the same person from the earlier reference images, keeping the same facial features and winter styling. The person must be wearing the oversized cream-colored fur coat with the large hood wrapped tightly around the face, covering most of the head and neck. The coat should look thick, fluffy, and luxurious, with realistic fur texture. Snow should cling lightly to the coat. The person is lying flat on their back on white, untouched snow, with clearly visible snow-angel impressions around their arms and legs.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => handleShare(
+                        'Snow Angel - Winter AI Prompt',
+                        'Create stunning Winter images with this AI prompt!'
+                      )}
+                      className="text-xs text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                      </svg>
+                      Share
+                    </button>
+                    <button
+                      onClick={() =>
+                        copyPromptLandingStyle(
+                          "A person lying on fresh snow making a snow angel with arms and legs spread out. Use the same person from the earlier reference images, keeping the same facial features and winter styling. The person must be wearing the oversized cream-colored fur coat with the large hood wrapped tightly around the face, covering most of the head and neck just like before. The coat should look thick, fluffy, and luxurious, with realistic fur texture. Snow should cling lightly to the coat. The person is lying flat on their back on white, untouched snow, with clearly visible snow-angel impressions around their arms and legs. The scene should be bright, cheerful, and wintery, captured from a top-down camera angle. Maintain realistic lighting, soft shadows, crisp snow texture, and high detail in the fur coat. The expression should be natural and slightly joyful or relaxed, fitting the playful snow-angel moment.",
+                          "winter-2"
+                        )
+                      }
+                      className="bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      {copiedKey === "winter-2" ? "Copied!" : "Copy Prompt"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Winter Image 3 - Winter Portrait at Twilight */}
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-200 group">
+                <div className="relative overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm">Winter</span>
+                  </div>
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwbYZ7KYcGEDKuSMxrTneaZkW0jLHlNB5hiQA7"
+                    alt="Winter Portrait at Twilight"
+                    loading="lazy"
+                    className="w-full aspect-[394/493] object-cover group-hover:scale-105 transition-transform duration-300 cursor-pointer"
+                    onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOwbYZ7KYcGEDKuSMxrTneaZkW0jLHlNB5hiQA7")}
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Winter Portrait at Twilight</h3>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                    Ultra-realistic use my face as a male model cinematic winter portrait collage arranged in three horizontal panels stacked vertically, featuring the same man in a snowy mountain landscape at twilight. The top panel shows an upper-body back view of the man standing in an open snowy area, facing distant mountains under a deep blue evening sky. He wears a black winter coat covered in snowflakes, and his dark hair is visible, slightly tousled by the cold wind and dusted with snow.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => handleShare(
+                        'Winter Portrait at Twilight - Winter AI Prompt',
+                        'Create stunning Winter images with this AI prompt!'
+                      )}
+                      className="text-xs text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                      </svg>
+                      Share
+                    </button>
+                    <button
+                      onClick={() =>
+                        copyPromptLandingStyle(
+                          "Ultra-realistic use my face as a male model cinematic winter portrait collage arranged in three horizontal panels stacked vertically, featuring the same man in a snowy mountain landscape at twilight. The top panel shows an upper-body back view of the man standing in an open snowy area, facing distant mountains under a deep blue evening sky. He wears a black winter coat covered in snowflakes, and his dark hair is visible, slightly tousled by the cold wind and dusted with snow.",
+                          "winter-3"
+                        )
+                      }
+                      className="bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      {copiedKey === "winter-3" ? "Copied!" : "Copy Prompt"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Winter Image 4 - Cinematic Winter Snowfall */}
+              <div className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-blue-200 group">
+                <div className="relative overflow-hidden">
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm">Winter</span>
+                  </div>
+                  <img
+                    src="https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw7FHsDlgrCexzG3sdp8WYDicNkoUbPOmTa0nI"
+                    alt="Cinematic Winter Snowfall"
+                    loading="lazy"
+                    className="w-full aspect-[394/493] object-cover group-hover:scale-105 transition-transform duration-300 cursor-pointer"
+                    onClick={() => setPreviewImage("https://lsn12plqor.ufs.sh/f/LXPMWJObUuOw7FHsDlgrCexzG3sdp8WYDicNkoUbPOmTa0nI")}
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Cinematic Winter Snowfall</h3>
+                  <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3">
+                    Create a 9:16 vertical cinematic composite divided into 3 stacked frames of the same young man in a winter snowfall scene. His face must match the uploaded reference photo 100% — same jawline, eyes, nose, lips, eyebrows, hair volume, and natural skin texture. Keep his bright, genuine big smile exactly like in the reference image. Top Frame: Extreme close-up of his smiling eye and cheek, snowflakes resting softly on his lashes and hair. Middle & Bottom Frame: Medium and full shots of him standing in snowfall, smiling warmly and naturally, breath visible in cold air.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => handleShare(
+                        'Cinematic Winter Snowfall - Winter AI Prompt',
+                        'Create stunning Winter images with this AI prompt!'
+                      )}
+                      className="text-xs text-gray-500 hover:text-gray-700 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                      </svg>
+                      Share
+                    </button>
+                    <button
+                      onClick={() =>
+                        copyPromptLandingStyle(
+                          "Create a 9:16 vertical cinematic composite divided into 3 stacked frames of the same young man in a winter snowfall scene. His face must match the uploaded reference photo 100% — same jawline, eyes, nose, lips, eyebrows, hair volume, and natural skin texture. Keep his bright, genuine big smile exactly like in the reference image — no minimal smile. Top Frame: Extreme close-up of his smiling eye and cheek, snowflakes resting softly on his lashes and hair. Middle & Bottom Frame: Medium and full shots of him standing in snowfall, smiling warmly and naturally, breath visible in cold air. Ultra-realistic 8K DSLR detail, visible pores, natural warmth in skin tone, soft snow lighting, and cinematic depth-of-field. Gentle pastel winter color grading, clean bokeh, real hair strands, no blurring of identity.",
+                          "winter-4"
+                        )
+                      }
+                      className="bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      {copiedKey === "winter-4" ? "Copied!" : "Copy Prompt"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </section>
           )}
 
