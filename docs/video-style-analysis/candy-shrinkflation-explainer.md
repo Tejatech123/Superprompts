@@ -1,4 +1,4 @@
-# Style Breakdown: "Why a ₹1 Candy Still Costs ₹1" (Indian Finance Academy)
+# Style Breakdown: "Why a ₹1 Candy Still Costs ₹1" (competitor reference)
 
 Source: `Video-48965.mp4`. Vertical 720×1280 at 30 fps, H.264. Runtime 84.9 s (about 82 s of content plus a 2.5 s logo outro). Stereo AAC at 48 kHz.
 
@@ -18,7 +18,7 @@ Source: `Video-48965.mp4`. Vertical 720×1280 at 30 fps, H.264. Runtime 84.9 s (
 | Answer | 0:49–1:03 | A press squeezes the candy, then a **SHRINKFLATION** title card and a biscuit pack shrinking 100 g → 75 g | The reveal, with the key term named |
 | Mechanics | 1:04–1:15 | Recipe valves (milk/sugar), filling 4.8 g → 4.4 g, lighter wrapper, tighter transport crates | Quick list of the methods |
 | Close | 1:16–1:22 | Back to the opening shop shot: "preserving the magical price tag of 1 Rupee." | Ends where it began |
-| Outro | 1:22–1:25 | The scene dims and the IFA shield logo fades in | Branding |
+| Outro | 1:22–1:25 | The scene dims and the channel logo fades in | Branding |
 
 **Narrative pattern:** Question → Paradox → Time-boxed promise → Two failed options → Named concept → How it works → Callback. The video names the one key term at its turning point and shows it as a full-screen title.
 
@@ -48,7 +48,7 @@ Source: `Video-48965.mp4`. Vertical 720×1280 at 30 fps, H.264. Runtime 84.9 s (
 - **Recurring props as data:** the calendar (year), the stopwatch (time left), coins (money), the scale (comparison), digital scales (100 g → 75 g, 4.8 g → 4.4 g). Every number is **shown on an object**, never as a plain text overlay.
 - **Motion feel:** springy ease-out/overshoot pops (price stickers, stopwatch drop), smooth eased tilts on the scale, mechanical linear motion in the factory (conveyors, presses, valves). Shapes do not squash and stretch much. It feels physical rather than cartoony.
 - **UI feedback cues:** a teal ripple ring when a coin is tapped (0:43), a "−0.4 g" delta label beside the readout, and a "+10%" weight tag dropping onto the sugar, milk and candy.
-- **Branding:** a small semi-transparent "INDIAN FINANCE ACADEMY" watermark in the top-right throughout, and the full logo only in the outro.
+- **Branding:** a small semi-transparent channel watermark in the top-right throughout, and the full logo only in the outro.
 
 ## 4. Captions and Typography
 
