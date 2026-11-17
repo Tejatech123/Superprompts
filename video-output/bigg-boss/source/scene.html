@@ -1,0 +1,553 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:NT;font-weight:500;src:url(node_modules/@fontsource/noto-sans-telugu/files/noto-sans-telugu-telugu-500-normal.woff2)}
+@font-face{font-family:NT;font-weight:800;src:url(node_modules/@fontsource/noto-sans-telugu/files/noto-sans-telugu-telugu-800-normal.woff2)}
+@font-face{font-family:IN;font-weight:700;src:url(node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:IN;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:IS;font-style:italic;font-weight:400;src:url(node_modules/@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2)}
+html,body{margin:0;background:#000}canvas{display:block}
+</style></head><body>
+<canvas id="c"></canvas>
+<script src="words.js"></script>
+<script>
+const MODE = new URLSearchParams(location.search).get('mode') || 'land';
+const LAND = MODE === 'land';
+const W = LAND ? 1920 : 1080, H = LAND ? 1080 : 1920, END = 199.6;
+const cv = document.getElementById('c'); cv.width = W; cv.height = H;
+const X = cv.getContext('2d');
+const T = { bg: '#040505', panel: '#0E141C', panelBorder: '#1E2A38', text: '#F5F5F2', muted: '#8A93A0',
+  accent: '#4C9BFF', negative: '#FF4D4D', highlighter: '#FFE14A', paper: '#F3EEDF', gold: '#E8B84A', goldL: '#FFE08A', goldD: '#9C7320' };
+const at = i => WORDS[i].start;
+
+// ---------- math ----------
+const cl = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const P = (t, a, b) => cl((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+function bez(x1, y1, x2, y2) { // cubic-bezier easing
+  return k => { if (k <= 0) return 0; if (k >= 1) return 1; let lo = 0, hi = 1, m;
+    for (let i = 0; i < 24; i++) { m = (lo + hi) / 2; const x = 3 * (1 - m) ** 2 * m * x1 + 3 * (1 - m) * m * m * x2 + m ** 3; if (x < k) lo = m; else hi = m; }
+    return 3 * (1 - m) ** 2 * m * y1 + 3 * (1 - m) * m * m * y2 + m ** 3; };
+}
+const E = bez(0.16, 1, 0.3, 1);
+const IN = (t, a, d = .33) => E(P(t, a, a + d));
+
+// ---------- layout ----------
+const M = LAND ? 120 : 80;
+const TB = LAND ? { x: 120, w: 820, cy: 560 } : { x: 80, w: 920, cy: 560 };   // text block
+const BIG = LAND ? { x: 120, w: 1680, cy: 540 } : { x: 80, w: 920, cy: 860 };
+const VB = LAND ? { x: 1010, y: 250, s: 0.98 } : { x: 140, y: 930, s: 1.0 };     // 800x720 visual box
+const HUD = LAND ? { x: W - 120 - 300, y: 56 } : { x: W - 60 - 300, y: 56 };
+
+const font = (w, s, fam = 'IN, NT', style = '') => `${style} ${w} ${s}px ${fam}`;
+function rr(c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, w, h, r); }
+function txt(c, s, x, y, size, col, w = 800, align = 'left', base = 'alphabetic', fam) {
+  c.font = font(w, size, fam); c.textAlign = align; c.textBaseline = base; c.fillStyle = col; c.fillText(s, x, y);
+}
+function wrap(c, s, maxW) {
+  const words = s.split(' '), out = []; let line = '';
+  for (const w of words) { const tst = line ? line + ' ' + w : w;
+    if (c.measureText(tst.replace(/\*/g, '')).width > maxW && line) { out.push(line); line = w; } else line = tst; }
+  if (line) out.push(line); return out;
+}
+// rich text: *word* = accent
+function rich(c, s, x, y, base, acc) {
+  let cx = x, on = false;
+  for (const part of s.split('*')) { if (part) { c.fillStyle = on ? acc : base; c.fillText(part, cx, y); cx += c.measureText(part).width; } on = !on; }
+}
+const STY = {
+  eyebrow: { w: 700, size: LAND ? 26 : 30, color: T.accent, lh: 1.5, gap: 18 },
+  h: { w: 800, size: LAND ? 92 : 84, color: T.text, lh: 1.32, gap: 26 },
+  big: { w: 800, size: LAND ? 132 : 112, color: T.text, lh: 1.25, gap: 26 },
+  num: { w: 800, size: LAND ? 150 : 130, color: T.accent, lh: 1.15, gap: 24 },
+  sub: { w: 500, size: LAND ? 40 : 42, color: T.muted, lh: 1.4, gap: 16 },
+};
+function block(c, t, box, items) {
+  const rows = [];
+  for (const it of items) {
+    const st = STY[it.kind], size = it.size || st.size;
+    c.font = font(st.w, size);
+    const ls = it.kind === 'eyebrow' ? [it.text] : wrap(c, it.text, box.w);
+    ls.forEach((ln, j) => rows.push({ it, ln, st, size, lh: size * st.lh, gap: j === ls.length - 1 ? st.gap : 0 }));
+  }
+  const total = rows.reduce((a, r) => a + r.lh + r.gap, 0) - (rows.length ? rows[rows.length - 1].gap : 0);
+  let y = box.cy - total / 2;
+  for (const r of rows) {
+    const k = IN(t, r.it.at), out = r.it.until ? 1 - P(t, r.it.until, r.it.until + .2) : 1;
+    if (k > 0 && out > 0) {
+      c.save(); c.globalAlpha *= k * out; c.font = font(r.st.w, r.size); c.textBaseline = 'middle'; c.textAlign = 'left';
+      const yy = y + r.lh / 2 + (1 - k) * 12;
+      if (r.it.kind === 'eyebrow') { c.fillStyle = T.accent; c.fillRect(box.x, yy - 2, 24, 3); c.fillStyle = T.accent; c.fillText(r.ln, box.x + 36, yy); }
+      else rich(c, r.ln, box.x, yy, r.it.color || r.st.color, r.it.acc || T.accent);
+      if (r.it.strike) { const sk = P(t, r.it.strike, r.it.strike + .35); if (sk > 0) {
+        c.strokeStyle = T.negative; c.lineWidth = r.size * .08; c.beginPath(); c.moveTo(box.x, yy); c.lineTo(box.x + c.measureText(r.ln.replace(/\*/g, '')).width * E(sk), yy); c.stroke(); } }
+      c.restore();
+    }
+    y += r.lh + r.gap;
+  }
+}
+function vbox(c, fn) { c.save(); c.translate(VB.x, VB.y); c.scale(VB.s, VB.s); fn(c); c.restore(); }
+function fade(c, k, fn) { if (k <= 0) return; c.save(); c.globalAlpha *= k; fn(c); c.restore(); }
+function enter(c, t, a, x, y, fn, d = .33) { // scale .96->1 + fade, around (x,y)
+  const k = IN(t, a, d); if (k <= 0) return;
+  c.save(); c.globalAlpha *= k; c.translate(x, y); const s = .96 + .04 * k; c.scale(s, s); c.translate(-x, -y); fn(c, k); c.restore();
+}
+function panel(c, x, y, w, h, o = {}) {
+  rr(c, x, y, w, h, o.r ?? 22); c.fillStyle = o.fill || T.panel; c.fill();
+  c.lineWidth = o.bw || 2; c.strokeStyle = o.border || T.panelBorder; c.stroke();
+}
+const inr = n => { const s = Math.round(n).toString(); if (s.length <= 3) return s; const last = s.slice(-3); let rest = s.slice(0, -3);
+  const parts = []; while (rest.length > 2) { parts.unshift(rest.slice(-2)); rest = rest.slice(0, -2); } if (rest) parts.unshift(rest); return parts.join(',') + ',' + last; };
+function count(t, a, from, to, d = .4) { return lerp(from, to, E(P(t, a, a + d))); }
+function glowC(c, x, y, r, rgb, a) { const g = c.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${rgb},${a})`); g.addColorStop(1, `rgba(${rgb},0)`); c.fillStyle = g; c.fillRect(x - r, y - r, 2 * r, 2 * r); }
+
+// ---------- illustrations ----------
+function trophy(c, x, y, s, shine = 1) {
+  c.save(); c.translate(x, y); c.scale(s, s);
+  glowC(c, 0, -60, 260, '232,184,74', .25 * shine);
+  const g = c.createLinearGradient(-120, 0, 120, 0); g.addColorStop(0, T.goldD); g.addColorStop(.45, T.goldL); g.addColorStop(1, T.goldD);
+  c.fillStyle = g; c.strokeStyle = g; c.lineWidth = 22;
+  c.beginPath(); c.arc(-118, -130, 52, Math.PI * .5, Math.PI * 1.5); c.stroke();
+  c.beginPath(); c.arc(118, -130, 52, -Math.PI * .5, Math.PI * .5); c.stroke();
+  c.beginPath(); c.moveTo(-120, -200); c.lineTo(120, -200); c.quadraticCurveTo(118, -40, 0, -10); c.quadraticCurveTo(-118, -40, -120, -200); c.fill();
+  c.fillRect(-18, -14, 36, 70); rr(c, -70, 56, 140, 26, 6); c.fill(); rr(c, -100, 82, 200, 44, 8); c.fill();
+  c.fillStyle = 'rgba(255,255,255,.35)'; c.beginPath(); c.ellipse(-60, -150, 14, 40, .3, 0, 7); c.fill();
+  c.restore();
+}
+function person(c, x, y, s, col, o = {}) { // simple bust icon, (x,y) = bottom centre
+  c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = col;
+  c.beginPath(); c.arc(0, -150, 46, 0, 7); c.fill();
+  c.beginPath(); c.moveTo(-90, 0); c.quadraticCurveTo(-90, -92, 0, -92); c.quadraticCurveTo(90, -92, 90, 0); c.fill();
+  if (o.q) txt(c, '?', 0, -122, 70, T.text, 800, 'center', 'middle');
+  c.restore();
+}
+function silhouette(c, x, y, s, rim, q, k = 1) {
+  c.save(); c.translate(x, y); c.scale(s, s);
+  glowC(c, 0, -170, 260, '76,155,255', .18 * rim);
+  c.fillStyle = '#121A24'; c.strokeStyle = `rgba(76,155,255,${.85 * rim})`; c.lineWidth = 4;
+  c.beginPath(); c.arc(0, -250, 70, 0, 7); c.fill(); c.stroke();
+  c.beginPath(); c.moveTo(-150, 0); c.quadraticCurveTo(-150, -160, 0, -160); c.quadraticCurveTo(150, -160, 150, 0); c.closePath(); c.fill(); c.stroke();
+  if (q) txt(c, '?', 0, -246, 96, T.accent, 800, 'center', 'middle');
+  c.restore();
+}
+function host(c, x, y, s, k = 1) { // stylised host: suit, shirt, mic — not a likeness
+  c.save(); c.translate(x, y); c.scale(s, s);
+  glowC(c, 0, -200, 330, '255,225,150', .22 * k);
+  // spotlight cone
+  c.fillStyle = `rgba(255,240,200,${.05 * k})`; c.beginPath(); c.moveTo(-40, -560); c.lineTo(40, -560); c.lineTo(220, 0); c.lineTo(-220, 0); c.fill();
+  c.fillStyle = '#1B2430'; c.beginPath(); c.moveTo(-160, 0); c.quadraticCurveTo(-160, -170, 0, -170); c.quadraticCurveTo(160, -170, 160, 0); c.fill();
+  c.fillStyle = '#EDEDE6'; c.beginPath(); c.moveTo(-40, -166); c.lineTo(0, -60); c.lineTo(40, -166); c.fill();
+  c.fillStyle = '#3A1F2B'; c.beginPath(); c.moveTo(-10, -150); c.lineTo(10, -150); c.lineTo(14, -80); c.lineTo(0, -64); c.lineTo(-14, -80); c.fill();
+  c.fillStyle = '#C8936B'; c.fillRect(-26, -200, 52, 40); c.beginPath(); c.arc(0, -250, 66, 0, 7); c.fill();
+  c.fillStyle = '#2A2A2A'; c.beginPath(); c.arc(0, -268, 68, Math.PI * 1.02, Math.PI * 1.98); c.fill();
+  // mic in hand
+  c.fillStyle = '#C8936B'; rr(c, 90, -150, 44, 54, 18); c.fill();
+  c.fillStyle = '#2B2F36'; c.save(); c.translate(112, -150); c.rotate(-.35); rr(c, -9, -90, 18, 92, 6); c.fill();
+  c.fillStyle = '#9AA3AD'; c.beginPath(); c.arc(0, -98, 22, 0, 7); c.fill(); c.restore();
+  c.restore();
+}
+function tv(c, x, y, w, h, inner) {
+  c.save(); rr(c, x - 14, y - 14, w + 28, h + 28, 24); c.fillStyle = '#1A2230'; c.fill();
+  rr(c, x, y, w, h, 12); c.fillStyle = '#0A0F16'; c.fill(); c.save(); c.clip(); inner && inner(c); c.restore();
+  c.fillStyle = '#1A2230'; c.fillRect(x + w / 2 - 30, y + h + 14, 60, 40); rr(c, x + w / 2 - 120, y + h + 50, 240, 14, 7); c.fill();
+  c.restore();
+}
+function ring(c, x, y, r, frac, col, wd = 14) {
+  c.lineCap = 'round'; c.lineWidth = wd; c.strokeStyle = 'rgba(255,255,255,.08)'; c.beginPath(); c.arc(x, y, r, 0, 7); c.stroke();
+  c.strokeStyle = col; c.beginPath(); c.arc(x, y, r, -Math.PI / 2, -Math.PI / 2 + frac * Math.PI * 2); c.stroke();
+}
+function bed(c, x, y, s) {
+  c.save(); c.translate(x, y); c.scale(s, s); c.fillStyle = '#1C2633';
+  rr(c, -170, -40, 340, 70, 14); c.fill(); rr(c, -170, -120, 30, 170, 8); c.fill(); rr(c, 140, -80, 30, 130, 8); c.fill();
+  c.fillStyle = '#2C3B4E'; rr(c, -136, -78, 90, 40, 14); c.fill(); c.fillStyle = '#24344A'; rr(c, -40, -64, 176, 30, 10); c.fill();
+  c.restore();
+}
+function receipt(c, x, y, w, h, t, lines, totalLine) {
+  c.save(); c.fillStyle = T.paper; c.beginPath(); c.moveTo(x, y); c.lineTo(x + w, y); c.lineTo(x + w, y + h);
+  const n = 16; for (let i = n; i >= 0; i--) c.lineTo(x + (w * i) / n, y + h + (i % 2 ? 14 : 0)); c.closePath(); c.fill();
+  lines.forEach((l, i) => {
+    const k = P(t, l.at, l.at + .45); if (k <= 0) return;
+    const ly = y + 80 + i * 76; c.save(); c.beginPath(); c.rect(x, ly - 50, 40 + (w - 40) * E(k), 70); c.clip();
+    txt(c, l.a, x + 40, ly, 34, '#3B3B36', 800, 'left', 'alphabetic');
+    txt(c, l.b, x + w - 40, ly, 38, l.col || '#23527F', 800, 'right', 'alphabetic');
+    c.restore();
+    c.strokeStyle = 'rgba(0,0,0,.12)'; c.setLineDash([6, 8]); c.lineWidth = 2; c.beginPath(); c.moveTo(x + 40, ly + 22); c.lineTo(x + w - 40, ly + 22); c.stroke(); c.setLineDash([]);
+  });
+  if (totalLine) { const k = IN(t, totalLine.at); if (k > 0) { c.globalAlpha *= k; const ty = y + h - 70;
+    c.strokeStyle = T.accent; c.lineWidth = 4; rr(c, x + 26, ty - 52, w - 52, 82, 12); c.stroke();
+    txt(c, totalLine.a, x + 50, ty, 34, '#3B3B36', 800); txt(c, totalLine.b, x + w - 50, ty + 2, 48, '#1F5FA8', 800, 'right'); } }
+  c.restore();
+}
+function tag(c, s, x, y, col = T.accent, size = 24) {
+  c.font = font(700, size); const w = c.measureText(s).width + 28;
+  rr(c, x, y, w, size + 18, (size + 18) / 2); c.fillStyle = col; c.fill(); txt(c, s, x + 14, y + size + 3, size, '#06101C', 700); return w;
+}
+function goldCoin(c, x, y, r) {
+  c.fillStyle = T.goldD; c.beginPath(); c.arc(x, y + r * .1, r, 0, 7); c.fill();
+  const g = c.createLinearGradient(x - r, y - r, x + r, y + r); g.addColorStop(0, T.goldL); g.addColorStop(1, T.gold);
+  c.fillStyle = g; c.beginPath(); c.arc(x, y, r, 0, 7); c.fill(); c.strokeStyle = T.goldD; c.lineWidth = r * .07; c.beginPath(); c.arc(x, y, r * .78, 0, 7); c.stroke();
+}
+
+// ---------- scenes (each: start time, draw) ----------
+const S = [];
+const add = (s, f) => S.push({ s, f });
+
+// 1 Hook: winner prize
+add(0, (c, t) => {
+  vbox(c, c => { enter(c, t, .1, 400, 560, c => trophy(c, 400, 560, 1.15, .6 + .4 * Math.sin(t * 2)), .8); });
+  block(c, t, TB, [
+    { kind: 'eyebrow', text: 'బిగ్ బాస్ విన్నర్ ప్రైజ్', at: at(0) },
+    { kind: 'num', text: '₹35 లక్షలు', at: at(5) },
+  ]);
+});
+// 2 Non-winner takes ~double
+add(at(8), (c, t) => {
+  vbox(c, c => {
+    enter(c, t, at(8), 200, 380, c => { panel(c, 20, 140, 360, 480);
+      c.save(); c.translate(200, 330); trophy(c, 0, 0, .42); c.restore();
+      txt(c, 'Winner', 200, 450, 34, T.muted, 700, 'center'); txt(c, '₹35L', 200, 540, 76, T.text, 800, 'center'); });
+    enter(c, t, at(11), 600, 380, c => { const hot = IN(t, at(17));
+      panel(c, 420, 140, 360, 480, { border: hot > 0 ? T.accent : T.panelBorder, bw: 2 + 3 * hot });
+      person(c, 600, 380, .9, '#2A3646', { q: true });
+      txt(c, 'Trophy లేదు', 600, 450, 34, T.muted, 700, 'center');
+      txt(c, hot > 0 ? '≈ 2X' : '?', 600, 540, 76, hot > 0 ? T.accent : T.text, 800, 'center'); });
+  });
+  block(c, t, TB, [
+    { kind: 'eyebrow', text: 'కానీ మీకు తెలుసా?', at: at(8) },
+    { kind: 'h', text: 'గెలవకపోయినా *రెట్టింపు* డబ్బు', at: at(11) },
+  ]);
+});
+// 3 The person who never slept in the house
+add(at(21), (c, t) => {
+  vbox(c, c => {
+    enter(c, t, at(24), 400, 520, c => silhouette(c, 400, 520, 1.05, .6 + .4 * Math.sin(t * 2.4), true), .6);
+    enter(c, t, at(33), 400, 640, c => { bed(c, 400, 650, .9); const k = IN(t, at(34));
+      c.strokeStyle = T.negative; c.lineWidth = 12; c.lineCap = 'round';
+      c.beginPath(); c.moveTo(270, 570); c.lineTo(270 + 260 * k, 570 + 130 * k); c.stroke();
+      if (k > .5) { c.beginPath(); c.moveTo(530, 570); c.lineTo(530 - 260 * (k * 2 - 1), 570 + 130 * (k * 2 - 1)); c.stroke(); } });
+  });
+  block(c, t, TB, [
+    { kind: 'eyebrow', text: 'ఇంకా ఆశ్చర్యం', at: at(21) },
+    { kind: 'h', text: 'అందరికంటే *ఎక్కువ* సంపాదన', at: at(27) },
+    { kind: 'sub', text: 'house లో ఒక్క రాత్రి కూడా పడుకోని వ్యక్తి', at: at(33) },
+  ]);
+});
+// 4 Where does the money come from
+add(at(38), (c, t) => {
+  block(c, t, BIG, [{ kind: 'big', text: 'ఈ డబ్బంతా *ఎక్కడి* నుంచి?', at: at(39) }]);
+});
+// 5 Every 10-second ad = ~3 lakh
+add(at(44), (c, t) => {
+  vbox(c, c => {
+    tv(c, 70, 150, 660, 380, c => {
+      const k = P(t, at(52), at(58) + .4); txt(c, 'AD BREAK', 400, 220, 30, T.muted, 700, 'center');
+      ring(c, 400, 345, 92, k, T.accent, 16);
+      txt(c, String(Math.max(0, Math.ceil(10 - 10 * k))), 400, 372, 82, T.text, 800, 'center');
+      txt(c, 'సెకన్లు', 400, 470, 26, T.muted, 500, 'center');
+    });
+  });
+  block(c, t, TB, [
+    { kind: 'eyebrow', text: 'ప్రతి 10 సెకన్ల ad కి', at: at(48) },
+    { kind: 'num', text: '₹' + inr(count(t, at(58), 0, 300000, .6)), at: at(58) },
+    { kind: 'sub', text: 'channel కి దాదాపు', at: at(55) },
+  ]);
+});
+// 6 How much does the channel earn? Who gets what?
+add(at(62), (c, t) => {
+  block(c, t, BIG, [
+    { kind: 'h', text: 'Channel *ఎంత* సంపాదిస్తుంది?', at: at(62) },
+    { kind: 'h', text: 'ఎవరికి *ఎంత* వెళ్తుంది?', at: at(71) },
+    { kind: 'sub', text: 'ఈ లెక్క తెలిశాక బిగ్ బాస్ ని ఇంతకు ముందులా చూడలేం', at: at(74), color: T.text },
+  ]);
+});
+// 7 Wordmark
+function wordmark(c, x, y, size, k = 1, align = 'left') {
+  c.save(); c.globalAlpha *= k; c.font = font(800, size); const w1 = c.measureText('Teja ').width;
+  c.font = `italic 400 ${size * 1.08}px IS`; const w2 = c.measureText('Decodes').width;
+  const x0 = align === 'center' ? x - (w1 + w2) / 2 : x;
+  txt(c, 'Teja ', x0, y, size, T.text, 800); c.font = `italic 400 ${size * 1.08}px IS`; c.fillStyle = T.accent; c.textAlign = 'left'; c.fillText('Decodes', x0 + w1, y);
+  c.restore();
+}
+add(at(84), (c, t) => {
+  block(c, t, BIG, [{ kind: 'sub', text: 'నమస్కారం, నేను తేజ్', at: at(84), until: at(87) - .3, color: T.text, size: LAND ? 56 : 56 }]);
+  const k = IN(t, at(87), .5);
+  if (k > 0) wordmark(c, LAND ? 120 : 80, BIG.cy + 40 + (1 - k) * 12, LAND ? 150 : 120, k);
+});
+// 8 Disclaimer
+add(at(91), (c, t) => {
+  const rows = [['Internet reports + మా సొంత అంచనాలు', at(98), T.accent, '✓'], ['Channel / Show team official గా చెప్పలేదు', at(108), T.negative, '!'],
+    ['పూర్తిగా ఖచ్చితం కాకపోవచ్చు', at(118), T.negative, '!'], ['ఒక idea కోసం మాత్రమే', at(123), T.accent, '✓']];
+  const x = LAND ? 120 : 80, w = LAND ? 1100 : 920, y0 = LAND ? 330 : 640;
+  block(c, t, LAND ? { x: 120, w: 1500, cy: 230 } : { x: 80, w: 920, cy: 500 }, [
+    { kind: 'eyebrow', text: 'మొదలు పెట్టే ముందు', at: at(91) }, { kind: 'h', text: 'ఒక్కమాట', at: at(94) }]);
+  rows.forEach(([s, a, col, mk], i) => enter(c, t, a, x + w / 2, y0 + i * 130 + 50, c => {
+    panel(c, x, y0 + i * 130, w, 106, { r: 18 });
+    c.fillStyle = col; c.beginPath(); c.arc(x + 58, y0 + i * 130 + 53, 26, 0, 7); c.fill();
+    txt(c, mk, x + 58, y0 + i * 130 + 55, 32, '#06101C', 800, 'center', 'middle');
+    txt(c, s, x + 110, y0 + i * 130 + 55, LAND ? 40 : 36, T.text, 500, 'left', 'middle');
+  }));
+});
+// 9 Six languages
+add(at(128), (c, t) => {
+  const langs = ['తెలుగు', 'హిందీ', 'తమిళం', 'కన్నడ', 'మలయాళం', 'మరాఠీ'];
+  vbox(c, c => langs.forEach((l, i) => enter(c, t, at(138) + i * .12, 130 + (i % 2) * 400 + 140, 180 + Math.floor(i / 2) * 190 + 70, c => {
+    panel(c, 130 + (i % 2) * 400 - 60, 180 + Math.floor(i / 2) * 190, 400, 150, { border: i === 0 ? T.accent : T.panelBorder, bw: i === 0 ? 4 : 2 });
+    txt(c, '#0' + (i + 1), 130 + (i % 2) * 400 - 30, 180 + Math.floor(i / 2) * 190 + 44, 22, T.muted, 700);
+    txt(c, l, 130 + (i % 2) * 400 - 30, 180 + Math.floor(i / 2) * 190 + 112, 50, T.text, 800);
+  })));
+  block(c, t, TB, [{ kind: 'eyebrow', text: 'Show ఎంత పెద్దది?', at: at(128) }, { kind: 'num', text: '6 భాషలు', at: at(138) }]);
+});
+// 10 95+ brands
+add(at(141), (c, t) => {
+  const k = P(t, at(141), at(148));
+  vbox(c, c => { for (let i = 0; i < 96; i++) { const on = i < k * 96; const x = 40 + (i % 12) * 62, y = 120 + Math.floor(i / 12) * 62;
+    rr(c, x, y, 50, 50, 10); c.fillStyle = on ? (i % 9 === 0 ? T.accent : '#1B2838') : '#0B1017'; c.fill(); } });
+  block(c, t, TB, [{ kind: 'num', text: Math.round(count(t, at(141), 0, 95, 1.4)) + '+', at: at(141) }, { kind: 'h', text: 'Brands sponsors గా', at: at(145) }]);
+});
+// 11 8 of 10 viewers
+add(at(149), (c, t) => {
+  vbox(c, c => { for (let i = 0; i < 10; i++) { const on = t >= at(157) + i * .06 && i < 8;
+    enter(c, t, at(152) + i * .05, 120 + (i % 5) * 140, 330 + Math.floor(i / 5) * 250, c => person(c, 120 + (i % 5) * 140, 330 + Math.floor(i / 5) * 250, .62, on ? T.accent : '#253142')); } });
+  block(c, t, TB, [{ kind: 'eyebrow', text: 'South India TV ప్రేక్షకులు', at: at(149) }, { kind: 'num', text: '10 లో 8', at: at(157) },
+    { kind: 'sub', text: 'మనలో చాలా మంది కూడా', at: at(162) }]);
+});
+// 12 One hour -> 10 min ads -> 60 slots
+add(at(168), (c, t) => {
+  vbox(c, c => {
+    const k1 = IN(t, at(170), .5), k2 = IN(t, at(175), .5), k3 = IN(t, at(179), .6);
+    txt(c, '1 గంట episode', 40, 200, 34, T.muted, 700);
+    rr(c, 40, 230, 720 * k1, 70, 12); c.fillStyle = '#1B2838'; c.fill();
+    rr(c, 640, 230, 120 * k2 * k1, 70, 12); c.fillStyle = T.accent; c.fill();
+    if (k2 > 0) txt(c, '10 ని. ads', 760, 350, 30, T.accent, 700, 'right');
+    if (k3 > 0) for (let i = 0; i < 60; i++) { const kk = cl(k3 * 2 - i / 60); if (kk <= 0) continue;
+      const x = 40 + (i % 12) * 60, y = 430 + Math.floor(i / 12) * 52; rr(c, x, y, 50 * kk, 40, 8); c.fillStyle = 'rgba(76,155,255,.85)'; c.fill(); }
+    if (k3 > 0) txt(c, '60 × 10 సెకన్ల slots', 40, 720, 34, T.text, 700);
+  });
+  block(c, t, TB, [{ kind: 'eyebrow', text: 'ఇప్పుడు సంపాదన', at: at(168) }, { kind: 'h', text: 'గంటలో *10 నిమిషాలు* ads', at: at(175) },
+    { kind: 'num', text: '= 60 slots', at: at(185), size: LAND ? 110 : 100 }]);
+});
+// 13 Weekday receipt
+add(at(186), (c, t) => {
+  vbox(c, c => enter(c, t, at(186), 400, 360, c => receipt(c, 150, 60, 500, 560, t,
+    [{ a: '1 slot', b: '₹1,00,000', at: at(192) }, { a: 'Slots', b: '× 60', at: at(194) }], { a: 'రోజుకి', b: '₹60 లక్షలు', at: at(196) })));
+  block(c, t, TB, [{ kind: 'eyebrow', text: 'మామూలు రోజుల్లో', at: at(186) }, { kind: 'h', text: 'రోజుకి *₹60 లక్షలు*', at: at(196) }]);
+});
+// 14 Weekend is different
+add(at(198), (c, t) => {
+  const days = ['సో', 'మం', 'బు', 'గు', 'శు', 'శ', 'ఆ'];
+  vbox(c, c => {
+    days.forEach((d, i) => { const we = i >= 5, hot = we ? IN(t, at(199)) : 0;
+      enter(c, t, at(198) + i * .05, 60 + i * 100 + 40, 200, c => { panel(c, 60 + i * 100, 140, 84, 120, { fill: hot > 0 ? `rgba(76,155,255,${.25 + .35 * hot})` : T.panel, border: hot > 0 ? T.accent : T.panelBorder });
+        txt(c, d, 102 + i * 100, 214, 34, T.text, 800, 'center'); }); });
+    enter(c, t, at(201), 400, 560, c => host(c, 400, 700, .72), .5);
+  });
+  block(c, t, TB, [{ kind: 'eyebrow', text: 'కానీ', at: at(198) }, { kind: 'h', text: '*Weekend* వేరు', at: at(199) }, { kind: 'sub', text: 'Host వచ్చే రోజు అందరూ TV ముందే', at: at(205) }]);
+});
+// 15 Weekend receipt
+add(at(209), (c, t) => {
+  vbox(c, c => enter(c, t, at(209), 400, 360, c => receipt(c, 150, 60, 500, 560, t,
+    [{ a: '1 slot', b: '₹3,00,000', at: at(212) }, { a: 'Slots', b: '× 60', at: at(216) }], { a: 'Episode కి', b: '₹1.8 కోట్లు', at: at(219) })));
+  block(c, t, TB, [{ kind: 'eyebrow', text: 'Weekend episode', at: at(209) }, { kind: 'h', text: 'Episode కి *₹1.8 కోట్లు*', at: at(219) }]);
+});
+// 16 Week = 6.6 crore
+add(at(222), (c, t) => {
+  vbox(c, c => {
+    const vals = [.6, .6, .6, .6, .6, 1.8, 1.8], lab = ['సో', 'మం', 'బు', 'గు', 'శు', 'శ', 'ఆ'];
+    vals.forEach((v, i) => { const k = IN(t, at(222) + i * .14, .5), h = v * 240 * k;
+      rr(c, 60 + i * 100, 600 - h, 80, h, 10); c.fillStyle = i >= 5 ? T.accent : '#2A3A50'; c.fill();
+      txt(c, lab[i], 100 + i * 100, 650, 30, T.muted, 700, 'center');
+      if (k > .5) txt(c, v >= 1 ? '1.8Cr' : '60L', 100 + i * 100, 590 - h, 24, T.text, 700, 'center'); });
+  });
+  block(c, t, TB, [{ kind: 'eyebrow', text: 'ఒక వారం మొత్తం', at: at(222) }, { kind: 'num', text: '₹6.6 కోట్లు', at: at(226) }]);
+});
+// 17 Season ~100 crore
+add(at(230), (c, t) => {
+  vbox(c, c => { for (let i = 0; i < 15; i++) { const k = IN(t, at(230) + i * .1, .4), h = 300 * k;
+    rr(c, 30 + i * 50, 600 - h, 38, h, 8); c.fillStyle = i === 14 && k > 0 ? T.accent : '#2A3A50'; c.fill(); }
+    txt(c, '15 వారాలు', 30, 660, 30, T.muted, 700); });
+  block(c, t, TB, [{ kind: 'eyebrow', text: 'పదిహేను వారాల season', at: at(230) }, { kind: 'num', text: '≈ ₹100 కోట్లు', at: at(235) },
+    { kind: 'sub', text: 'కేవలం TV ads నుంచి మాత్రమే', at: at(238) }]);
+});
+// 18 Big number
+add(at(243), (c, t) => {
+  block(c, t, BIG, [{ kind: 'num', text: '₹100,00,00,000', at: at(243), size: LAND ? 190 : 120 }, { kind: 'h', text: 'చాలా *పెద్ద* number కదా?', at: at(245) }]);
+});
+// 19 Costs: host
+add(at(248), (c, t) => {
+  vbox(c, c => enter(c, t, at(251), 400, 500, c => host(c, 400, 690, .95), .5));
+  block(c, t, TB, [{ kind: 'eyebrow', text: 'ఇప్పుడు ఖర్చులు', at: at(248) }, { kind: 'h', text: '#1  Host', at: at(251) },
+    { kind: 'num', text: '≈ ₹40 కోట్లు*', at: at(259), size: LAND ? 120 : 104, color: T.negative },
+    { kind: 'sub', text: '*reports అంచనా: 30 episodes × ₹1.33 కోట్లు', at: at(260) }]);
+});
+// 20 Callback reveal
+add(at(261), (c, t) => {
+  const r = IN(t, at(275), .7);
+  vbox(c, c => { fade(c, 1 - r, c => silhouette(c, 400, 640, 1.05, .8, true)); fade(c, r, c => host(c, 400, 690, .95)); });
+  block(c, t, TB, [{ kind: 'eyebrow', text: 'మొదట్లో చెప్పిన ఆశ్చర్యం', at: at(261) }, { kind: 'sub', text: 'house లో ఒక్క రాత్రి కూడా పడుకోని వ్యక్తి', at: at(266), color: T.text },
+    { kind: 'h', text: 'మన *నాగార్జున గారే*', at: at(275) }]);
+});
+// 21 ~30 weekend episodes -> 1.33 crore / episode
+add(at(277), (c, t) => {
+  vbox(c, c => { for (let w = 0; w < 15; w++) for (let d = 0; d < 7; d++) { const we = d >= 5, x = 120 + d * 82, y = 70 + w * 38;
+    const on = we && t >= at(282) + w * .05; rr(c, x, y, 70, 30, 6); c.fillStyle = on ? T.accent : (we ? '#22324A' : '#111821'); c.fill(); }
+    txt(c, 'సో  మం  బు  గు  శు  శ  ఆ', 130, 660, 26, T.muted, 700); });
+  block(c, t, TB, [{ kind: 'eyebrow', text: 'Weekends మాత్రమే', at: at(277) }, { kind: 'h', text: 'దాదాపు *30* episodes', at: at(282) },
+    { kind: 'num', text: '₹1.33 కోట్లు', at: at(290), size: LAND ? 120 : 104 }, { kind: 'sub', text: 'ఒక్క episode కి', at: at(286) }]);
+});
+// 22 Ratings spike on weekends
+add(at(294), (c, t) => {
+  vbox(c, c => { const k = P(t, at(295), at(299) + .6); const pts = [];
+    for (let i = 0; i <= 14; i++) { const d = i % 7; pts.push([60 + i * 48, d >= 5 ? 200 : 470 + Math.sin(i) * 20]); }
+    c.strokeStyle = '#1E2A38'; c.lineWidth = 2; for (let g = 0; g < 4; g++) { c.beginPath(); c.moveTo(60, 160 + g * 110); c.lineTo(740, 160 + g * 110); c.stroke(); }
+    c.strokeStyle = T.accent; c.lineWidth = 6; c.lineJoin = 'round'; c.beginPath();
+    const n = Math.max(1, Math.floor(k * (pts.length - 1)) + 1); pts.slice(0, n).forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.stroke();
+    pts.slice(0, n).forEach(([x, y], i) => { if (i % 7 >= 5) { c.fillStyle = T.accent; c.beginPath(); c.arc(x, y, 10, 0, 7); c.fill(); } });
+    txt(c, 'Ratings', 60, 130, 28, T.muted, 700);
+    enter(c, t, at(303), 520, 120, c => { tag(c, 'Weekend = ₹1.8Cr ads', 330, 70, T.accent, 26); });
+  });
+  block(c, t, TB, [{ kind: 'eyebrow', text: 'ఎందుకంటే', at: at(294) }, { kind: 'h', text: 'Weekend ratings *ఆయన* వల్లే', at: at(295) },
+    { kind: 'sub', text: 'ఆ ₹1.8 కోట్ల ad డబ్బు కూడా ఆయన stage మీద ఉండబట్టే', at: at(302) }]);
+});
+// 23 Who earns more without the trophy
+add(at(314), (c, t) => {
+  vbox(c, c => { enter(c, t, at(325), 400, 520, c => { silhouette(c, 400, 640, 1.0, 1, false);
+    c.fillStyle = T.gold; c.save(); c.translate(400, 380); c.beginPath(); for (let i = 0; i < 10; i++) { const r = i % 2 ? 22 : 52, a = -Math.PI / 2 + i * Math.PI / 5; c.lineTo(Math.cos(a) * r, Math.sin(a) * r); } c.fill(); c.restore(); }, .5);
+    enter(c, t, at(320), 400, 690, c => tag(c, '15 వారాలు house లో', 260, 670, T.accent, 28)); });
+  block(c, t, TB, [{ kind: 'eyebrow', text: 'Trophy లేకుండా ఎక్కువ ఎవరికి?', at: at(314) }, { kind: 'h', text: 'Top *celebrity*', at: at(325) }]);
+});
+// 24 4.5 lakh/week -> 67.5 lakh
+add(at(327), (c, t) => {
+  vbox(c, c => enter(c, t, at(327), 400, 360, c => receipt(c, 150, 60, 500, 560, t,
+    [{ a: 'వారానికి', b: '₹4.5 లక్షలు', at: at(328) }, { a: 'వారాలు', b: '× 15', at: at(330) }], { a: 'మొత్తం', b: '₹67.5 లక్షలు', at: at(332) })));
+  block(c, t, TB, [{ kind: 'eyebrow', text: 'Top celebrity సంపాదన', at: at(327) }, { kind: 'num', text: '₹' + (count(t, at(332), 0, 67.5, .7)).toFixed(1) + ' లక్షలు', at: at(332), size: LAND ? 120 : 100 }]);
+});
+// 25 vs winner prize
+add(at(335), (c, t) => {
+  vbox(c, c => { const k1 = IN(t, at(335), .6), k2 = IN(t, at(338), .6);
+    txt(c, 'Top celebrity', 40, 220, 32, T.text, 700); rr(c, 40, 240, 700 * k1, 90, 12); c.fillStyle = T.accent; c.fill(); if (k1 > .6) txt(c, '₹67.5L', 60 + 0, 300, 40, '#06101C', 800);
+    txt(c, 'Winner prize', 40, 440, 32, T.text, 700); rr(c, 40, 460, 363 * k2, 90, 12); c.fillStyle = '#2A3A50'; c.fill(); if (k2 > .6) txt(c, '₹35L', 60, 520, 40, T.text, 800);
+    if (k2 > .8) tag(c, '≈ 2X', 600, 360, T.accent, 34); });
+  block(c, t, TB, [{ kind: 'eyebrow', text: 'Winner prize మాత్రం', at: at(335) }, { kind: 'h', text: 'కేవలం *₹35 లక్షలే*', at: at(338) }]);
+});
+// 26 Why spend so much? Jackpot
+add(at(341), (c, t) => {
+  block(c, t, BIG, [{ kind: 'h', text: 'Channel ఇంత ఖర్చు *ఎందుకు* పెడుతుంది?', at: at(341) },
+    { kind: 'num', text: 'JACKPOT', at: at(349), color: T.gold }, { kind: 'sub', text: 'TV ads ఒక్కటే కాదు', at: at(350), color: T.text }]);
+});
+// 27 Three hidden income sources
+add(at(354), (c, t) => {
+  const tiles = [['Sponsor deals', at(354)], ['24 గంటల live streaming', at(356)], ['Show తర్వాత కూడా audience', at(364)]];
+  const x0 = LAND ? 120 : 80, tw = LAND ? 530 : 920, th = LAND ? 340 : 230;
+  tiles.forEach(([s, a], i) => { const x = LAND ? x0 + i * (tw + 45) : x0, y = LAND ? 360 : 520 + i * (th + 40);
+    enter(c, t, a, x + tw / 2, y + th / 2, c => { panel(c, x, y, tw, th, { border: t > a + .4 && t < (tiles[i + 1] ? tiles[i + 1][1] : at(372)) ? T.accent : T.panelBorder, bw: 3 });
+      txt(c, '#0' + (i + 1), x + 36, y + 60, 26, T.muted, 700); c.font = font(800, LAND ? 48 : 52);
+      wrap(c, s, tw - 72).forEach((ln, j) => txt(c, ln, x + 36, y + (LAND ? 170 : 140) + j * 66, LAND ? 48 : 52, T.text, 800)); }); });
+  block(c, t, LAND ? { x: 120, w: 1600, cy: 230 } : { x: 80, w: 920, cy: 360 }, [{ kind: 'eyebrow', text: 'అసలు jackpot', at: at(354) },
+    { kind: 'h', text: 'బయటికి చెప్పని *లెక్కలు*', at: at(371), size: LAND ? 72 : 72 }]);
+});
+// 28 Drama loop
+add(at(375), (c, t) => {
+  vbox(c, c => { const nodes = [[400, 140, 'గొడవలు & emotions', at(378)], [660, 540, 'ఎక్కువ మంది చూస్తారు', at(381)], [140, 540, '10-sec rate ↑', at(389)]];
+    c.save(); c.strokeStyle = 'rgba(76,155,255,.6)'; c.lineWidth = 6; c.setLineDash([4, 18]); c.lineCap = 'round'; c.lineDashOffset = -t * 60;
+    const lk = P(t, at(378), at(391)); c.beginPath(); c.arc(400, 400, 250, -Math.PI / 2, -Math.PI / 2 + lk * Math.PI * 2); c.stroke(); c.restore();
+    nodes.forEach(([x, y, s, a]) => enter(c, t, a, x, y, c => { c.font = font(800, 34); const w = c.measureText(s).width + 50;
+      rr(c, x - w / 2, y - 45, w, 90, 45); c.fillStyle = T.panel; c.fill(); c.strokeStyle = T.accent; c.lineWidth = 3; c.stroke();
+      txt(c, s, x, y + 2, 34, T.text, 800, 'center', 'middle'); })); });
+  block(c, t, TB, [{ kind: 'eyebrow', text: 'అందుకే', at: at(375) }, { kind: 'h', text: 'ఎంత ఎక్కువ మంది చూస్తే, *rate* అంత పెరుగుతుంది', at: at(381) }]);
+});
+// 29 Not just a reality show — a business
+add(at(392), (c, t) => {
+  const stats = [['కోట్ల', 'ప్రేక్షకులు', at(401)], ['వందల', 'brands', at(404)], ['వేల', 'మంది పని', at(407)]];
+  block(c, t, LAND ? { x: 120, w: 1600, cy: 300 } : { x: 80, w: 920, cy: 480 }, [
+    { kind: 'h', text: 'Reality show', at: at(398), strike: at(399), size: LAND ? 84 : 76 },
+    { kind: 'big', text: 'ఒక పెద్ద *Business*', at: at(410) }]);
+  stats.forEach(([a, b, tt], i) => { const x = LAND ? 120 + i * 560 : 80, y = LAND ? 660 : 940 + i * 230;
+    enter(c, t, tt, x + 250, y + 90, c => { panel(c, x, y, LAND ? 520 : 920, 190);
+      txt(c, a, x + 40, y + 104, 72, T.accent, 800); txt(c, b, x + 40, y + 158, 36, T.muted, 500); }); });
+});
+// 30 Saturday night, we're part of it
+add(at(413), (c, t) => {
+  vbox(c, c => { tv(c, 120, 140, 560, 330, c => { const g = c.createLinearGradient(120, 140, 680, 470); g.addColorStop(0, '#1E4F8F'); g.addColorStop(1, '#0A1F3A'); c.fillStyle = g; c.fillRect(120, 140, 560, 330);
+      host(c, 400, 470, .5); });
+    glowC(c, 400, 420, 420, '76,155,255', .12);
+    for (let i = 0; i < 3; i++) enter(c, t, at(416) + i * .1, 260 + i * 140, 700, c => person(c, 260 + i * 140, 720, .55, '#1B2533')); });
+  block(c, t, TB, [{ kind: 'eyebrow', text: 'ప్రతి శనివారం రాత్రి', at: at(413) }, { kind: 'h', text: 'మనం కూడా ఆ *business* లో భాగమే', at: at(422) }]);
+});
+// 31 Comment prompt
+add(at(426), (c, t) => {
+  block(c, t, BIG, [{ kind: 'eyebrow', text: 'మీ అభిప్రాయం', at: at(426) }, { kind: 'h', text: 'ఈ season లో మీకు *ఎవరు* నచ్చారు?', at: at(426) },
+    { kind: 'h', text: 'ఎవరు *గెలుస్తారు*?', at: at(432) }, { kind: 'sub', text: 'Comment లో చెప్పండి ↓', at: at(433), color: T.accent }]);
+});
+// 32 Next video tease + end card
+add(at(435), (c, t) => {
+  const endK = IN(t, 197.3, .6);
+  fade(c, 1 - endK, c => {
+    vbox(c, c => enter(c, t, at(442), 400, 400, c => { goldCoin(c, 400, 400, 190); txt(c, '1', 400, 420, 150, T.goldD, 800, 'center', 'middle'); txt(c, 'తులం', 400, 520, 46, T.goldD, 800, 'center', 'middle'); }, .6));
+    block(c, t, TB, [{ kind: 'eyebrow', text: 'Next video', at: at(435) }, { kind: 'h', text: 'Jewellery shop కి ఒక్క *తులం* మీద లాభం ఎంత?', at: at(438) }]);
+  });
+  if (endK > 0) { wordmark(c, LAND ? 120 : W / 2, H / 2 + 20, LAND ? 140 : 110, endK, LAND ? 'left' : 'center');
+    const k2 = IN(t, 197.9, .4); if (k2 > 0) { c.save(); c.globalAlpha *= k2; const bx = LAND ? 120 : W / 2 - 170, by = H / 2 + 80;
+      const click = t > 198.6; rr(c, bx, by, 340, 84, 42); c.fillStyle = click ? '#2A3A50' : T.negative; c.fill();
+      txt(c, click ? 'SUBSCRIBED ✓' : 'SUBSCRIBE', bx + 170, by + 44, 34, T.text, 800, 'center', 'middle');
+      const cx = lerp(bx + 500, bx + 200, E(P(t, 197.9, 198.5))), cy = lerp(by + 200, by + 50, E(P(t, 197.9, 198.5)));
+      c.fillStyle = '#fff'; c.strokeStyle = '#000'; c.lineWidth = 2; c.beginPath(); c.moveTo(cx, cy); c.lineTo(cx, cy + 40); c.lineTo(cx + 11, cy + 30); c.lineTo(cx + 22, cy + 48); c.lineTo(cx + 29, cy + 44); c.lineTo(cx + 19, cy + 27); c.lineTo(cx + 32, cy + 26); c.closePath(); c.fill(); c.stroke();
+      c.restore(); } }
+});
+
+// ---------- HUD: running money counter ----------
+const HUDK = [[at(196), 60, 'రోజు (TV ads)'], [at(219), 180, 'Weekend episode'], [at(226), 660, 'వారం'], [at(235), 10000, 'Season (TV ads)']];
+function money(l) { return l >= 100 ? '₹' + (l / 100).toFixed(l % 100 ? 1 : 0) + ' కో.' : '₹' + Math.round(l) + ' ల.'; }
+function hud(c, t) {
+  const show = IN(t, at(196), .4) * (1 - P(t, at(341), at(341) + .3)); if (show <= 0) return;
+  let i = 0; for (let j = 0; j < HUDK.length; j++) if (t >= HUDK[j][0]) i = j;
+  const prev = i ? HUDK[i - 1][1] : 0, v = count(t, HUDK[i][0], prev, HUDK[i][1], .4);
+  const costOn = t >= at(259);
+  const host = costOn ? count(t, at(259), 0, 4000, .4) : 0, celeb = t >= at(332) ? count(t, at(332), 0, 67.5, .4) : 0;
+  c.save(); c.globalAlpha *= show; const { x, y } = HUD, h = costOn ? 196 : 124;
+  panel(c, x, y, 300, h, { r: 16 }); txt(c, 'Channel ఆదాయం', x + 20, y + 34, 20, T.muted, 700);
+  txt(c, '+' + money(v), x + 20, y + 84, 44, T.accent, 800); txt(c, costOn ? 'Season (TV ads)' : HUDK[i][2], x + 20, y + 110, 18, T.muted, 500);
+  if (costOn) { c.fillStyle = T.panelBorder; c.fillRect(x + 20, y + 124, 260, 2);
+    txt(c, '−' + money(host + celeb), x + 20, y + 170, 36, T.negative, 800); txt(c, celeb > 0 ? 'Host + Celebrity' : 'Host', x + 280, y + 170, 18, T.muted, 500, 'right'); }
+  // day progress bar
+  rr(c, x + 20, y + h - 10, 260 * Math.min(1, (t - at(196)) / (at(341) - at(196))), 3, 2); c.fillStyle = T.accent; c.fill();
+  c.restore();
+}
+
+// ---------- captions (vertical only) ----------
+const CHUNKS = (() => { const out = []; let cur = [];
+  WORDS.forEach((w, i) => { cur.push(i); const end = /[.,?!]$/.test(w.text) || w.text.endsWith('...');
+    if (end || cur.length >= 4) { out.push(cur); cur = []; } }); if (cur.length) out.push(cur); return out; })();
+function captions(c, t) {
+  let ch = null; for (const k of CHUNKS) { const s = WORDS[k[0]].start, e = WORDS[k[k.length - 1]].end + .15; if (t >= s - .05 && t < e) ch = k; }
+  if (!ch) return; const size = 58, y = 1720; c.font = font(800, size); const sp = 16;
+  const ws = ch.map(i => c.measureText(WORDS[i].text).width); const tot = ws.reduce((a, b) => a + b, 0) + sp * (ws.length - 1);
+  const sc = Math.min(1, 960 / tot); c.save(); c.translate(W / 2, y); c.scale(sc, sc); let x = -tot / 2;
+  ch.forEach((i, j) => { const w = WORDS[i], act = t >= w.start && t < w.end + .1;
+    c.font = font(800, size); c.textAlign = 'left'; c.textBaseline = 'middle'; c.lineJoin = 'round'; c.lineWidth = 12; c.strokeStyle = 'rgba(0,0,0,.85)';
+    c.strokeText(w.text, x, 0); c.fillStyle = act ? T.highlighter : T.text; c.fillText(w.text, x, 0); x += ws[j] + sp; });
+  c.restore();
+}
+
+// ---------- frame ----------
+const noise = [0, 1, 2, 3].map(s => { const n = document.createElement('canvas'); n.width = n.height = 256; const g = n.getContext('2d'), d = g.createImageData(256, 256);
+  let r = 1234 + s * 999; for (let i = 0; i < d.data.length; i += 4) { r = (r * 16807) % 2147483647; const v = r % 255; d.data[i] = d.data[i + 1] = d.data[i + 2] = v; d.data[i + 3] = 255; }
+  g.putImageData(d, 0, 0); return n; });
+const XF = .22;
+window.renderFrame = function (t) {
+  const c = X; c.save();
+  c.fillStyle = T.bg; c.fillRect(0, 0, W, H);
+  const vg = c.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, Math.max(W, H) * .6); vg.addColorStop(0, 'rgba(255,255,255,0.035)'); vg.addColorStop(1, 'rgba(0,0,0,0)'); c.fillStyle = vg; c.fillRect(0, 0, W, H);
+  let i = 0; for (let j = 0; j < S.length; j++) if (t >= S[j].s) i = j;
+  const k = i > 0 ? P(t, S[i].s, S[i].s + XF) : 1;
+  if (k < 1) { c.save(); c.globalAlpha = 1 - k; S[i - 1].f(c, t); c.restore(); }
+  c.save(); c.globalAlpha = k; S[i].f(c, t); c.restore();
+  hud(c, t);
+  if (!LAND) captions(c, t);
+  c.save(); c.globalAlpha = .35; c.font = `italic 400 ${LAND ? 26 : 30}px IS`; c.textAlign = 'right'; c.textBaseline = 'alphabetic'; c.fillStyle = T.text;
+  if (t < 197.3) c.fillText('Teja Decodes', W - (LAND ? 60 : 50), H - (LAND ? 44 : 60)); c.restore();
+  c.save(); c.globalAlpha = .03; c.globalCompositeOperation = 'screen'; c.fillStyle = c.createPattern(noise[Math.floor(t * 30) % 4], 'repeat'); c.fillRect(0, 0, W, H); c.restore();
+  const fo = P(t, END - .5, END); if (fo > 0) { c.fillStyle = `rgba(4,5,5,${fo})`; c.fillRect(0, 0, W, H); }
+  c.restore();
+};
+window.ready = (async () => { await Promise.all(['500 40px NT', '800 40px NT', '700 40px IN', '800 40px IN', 'italic 400 40px IS'].map(f => document.fonts.load(f, 'అబ Aa'))); return true; })();
+</script></body></html>
